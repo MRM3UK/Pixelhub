@@ -1,0 +1,3649 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#0a0a0f"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>Pixedrain™ - Premium Video Manager</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ========== THEME SYSTEM ========== */
+  :root, [data-theme="dark"] {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #0f0f18;
+    --bg-card: #12121e;
+    --bg-elevated: #1a1a2e;
+    --accent: #7c3aed;
+    --accent-light: #9d5bff;
+    --accent-glow: rgba(124, 58, 237, 0.3);
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #475569;
+    --border: #1e1e35;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --topnav-bg: rgba(10,10,15,0.95);
+    --gradient-start: #9d5bff;
+    --gradient-end: #7c3aed;
+  }
+  
+  [data-theme="light"] {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-elevated: #e2e8f0;
+    --accent: #7c3aed;
+    --accent-light: #8b5cf6;
+    --accent-glow: rgba(124, 58, 237, 0.15);
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border: #e2e8f0;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --topnav-bg: rgba(248,250,252,0.95);
+    --gradient-start: #8b5cf6;
+    --gradient-end: #7c3aed;
+  }
+  
+  [data-theme="midnight"] {
+    --bg-primary: #020617;
+    --bg-secondary: #0f172a;
+    --bg-card: #1e293b;
+    --bg-elevated: #334155;
+    --accent: #3b82f6;
+    --accent-light: #60a5fa;
+    --accent-glow: rgba(59, 130, 246, 0.3);
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border: #1e293b;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --warning: #eab308;
+    --topnav-bg: rgba(2,6,23,0.95);
+    --gradient-start: #60a5fa;
+    --gradient-end: #3b82f6;
+  }
+  
+  [data-theme="amoled"] {
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-card: #121212;
+    --bg-elevated: #1a1a1a;
+    --accent: #bb86fc;
+    --accent-light: #cf9fff;
+    --accent-glow: rgba(187, 134, 252, 0.3);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --text-muted: #666666;
+    --border: #2a2a2a;
+    --success: #03dac6;
+    --danger: #cf6679;
+    --warning: #ffb74d;
+    --topnav-bg: rgba(0,0,0,0.98);
+    --gradient-start: #cf9fff;
+    --gradient-end: #bb86fc;
+  }
+  
+  [data-theme="sunset"] {
+    --bg-primary: #1a1423;
+    --bg-secondary: #251b2f;
+    --bg-card: #2d2139;
+    --bg-elevated: #3d2f4a;
+    --accent: #f97316;
+    --accent-light: #fb923c;
+    --accent-glow: rgba(249, 115, 22, 0.3);
+    --text-primary: #fef3c7;
+    --text-secondary: #d4a574;
+    --text-muted: #9a7b5a;
+    --border: #3d2f4a;
+    --success: #84cc16;
+    --danger: #ef4444;
+    --warning: #fbbf24;
+    --topnav-bg: rgba(26,20,35,0.95);
+    --gradient-start: #fb923c;
+    --gradient-end: #f97316;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Smooth transitions for theme changes */
+  *, *::before, *::after {
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+  /* Top Nav */
+  .topnav {
+    background: var(--topnav-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 56px;
+  }
+  .logo-text {
+    background: linear-gradient(135deg, var(--gradient-start), var(--accent), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.5px;
+  }
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 56px; left: 0; bottom: 0;
+    width: 260px;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    z-index: 90;
+    overflow-y: auto;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 89; display: none; backdrop-filter: blur(2px);
+  }
+  .sidebar-overlay.show { display: block; }
+  .nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 20px; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.2s; border-radius: 0;
+    font-size: 0.9rem; font-weight: 500;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover { background: var(--bg-elevated); color: var(--text-primary); }
+  .nav-item.active { background: var(--bg-elevated); color: var(--accent-light); border-left-color: var(--accent); }
+  .nav-item i { width: 20px; text-align: center; }
+  /* Main content */
+  .main { margin-top: 56px; min-height: calc(100vh - 56px); }
+  /* Search bar */
+  .search-input {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: 999px;
+    padding: 8px 16px 8px 40px;
+    font-size: 0.875rem;
+    width: 100%;
+    max-width: 380px;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+  /* Cards */
+  .video-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .video-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 32px var(--accent-glow); }
+  .thumbnail-wrap { position: relative; aspect-ratio: 16/9; background: #0d0d1a; overflow: hidden; }
+  .thumbnail-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+  .video-card:hover .thumbnail-wrap img { transform: scale(1.05); }
+  .play-overlay {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .video-card:hover .play-overlay { opacity: 1; }
+  .play-btn-big {
+    width: 52px; height: 52px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1.2rem;
+    box-shadow: 0 4px 20px var(--accent-glow);
+  }
+  .pin-badge {
+    position: absolute; top: 8px; left: 8px;
+    background: var(--warning);
+    color: #000; font-size: 0.65rem; font-weight: 700;
+    padding: 2px 7px; border-radius: 999px;
+  }
+  .card-info { padding: 10px 12px; }
+  .card-title { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card-meta { font-size: 0.72rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+  /* Folder card */
+  .folder-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .folder-card:hover { border-color: var(--accent); background: var(--bg-elevated); }
+  .folder-icon { font-size: 1.8rem; color: var(--warning); }
+  /* Album card */
+  .album-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .album-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .album-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; aspect-ratio: 1; background: #0d0d1a; }
+  .album-grid img { width: 100%; height: 100%; object-fit: cover; }
+  /* Modal */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    z-index: 200; display: none; align-items: center; justify-content: center;
+    padding: 16px; backdrop-filter: blur(8px);
+  }
+  .modal-bg.show { display: flex; }
+  .modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    width: 100%; max-width: 520px;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    animation: modalIn 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-header {
+    padding: 20px 20px 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-title { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+  .modal-body { padding: 20px; }
+  /* Input */
+  .input-field {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    width: 100%; outline: none;
+    transition: all 0.2s;
+  }
+  .input-field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+  .input-field::placeholder { color: var(--text-muted); }
+  /* Buttons */
+  .btn-primary {
+    background: var(--accent);
+    color: white; border: none;
+    padding: 10px 20px; border-radius: 10px;
+    font-size: 0.875rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 15px var(--accent-glow); }
+  .btn-ghost {
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--border);
+    padding: 10px 20px; border-radius: 10px;
+    font-size: 0.875rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-ghost:hover { background: var(--bg-elevated); color: var(--text-primary); }
+  .btn-danger {
+    background: var(--danger);
+    color: white; border: none;
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-danger:hover { opacity: 0.85; }
+  .btn-icon {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s; font-size: 0.8rem;
+  }
+  .btn-icon:hover { background: var(--accent); color: white; border-color: var(--accent); }
+  /* Player info modal extras */
+  /* Toast */
+  .toast-container {
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+    z-index: 500; display: flex; flex-direction: column; gap: 8px; align-items: center;
+    pointer-events: none; max-width: 90vw;
+  }
+  .toast {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 12px 20px; border-radius: 12px;
+    font-size: 0.85rem; font-weight: 500;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+    animation: toastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex; align-items: center; gap: 10px;
+    backdrop-filter: blur(12px);
+    max-width: 100%;
+  }
+  .toast-icon {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; flex-shrink: 0;
+  }
+  .toast.success .toast-icon { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+  .toast.error .toast-icon { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .toast.success { border-color: var(--success); }
+  .toast.error { border-color: var(--danger); }
+  /* Tab bar */
+  .tab-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(10,10,15,0.97);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex; z-index: 80; height: 60px;
+  }
+  .tab-item {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 3px; color: var(--text-muted);
+    cursor: pointer; transition: all 0.2s;
+    font-size: 0.6rem; font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .tab-item i { font-size: 1.1rem; }
+  .tab-item.active { color: var(--accent-light); }
+  .tab-item:hover { color: var(--text-secondary); }
+  /* Section title */
+  .section-title {
+    font-size: 1rem; font-weight: 700;
+    color: var(--text-primary);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::before {
+    content: ''; display: block;
+    width: 4px; height: 18px;
+    background: var(--accent);
+    border-radius: 4px;
+  }
+  /* Grid */
+  .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  @media(min-width:480px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media(min-width:640px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media(min-width:900px) { .video-grid { grid-template-columns: repeat(4, 1fr); } }
+  /* Upload area */
+  .upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 14px;
+    padding: 32px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--bg-elevated);
+  }
+  .upload-area:hover, .upload-area.drag-over {
+    border-color: var(--accent);
+    background: rgba(124,58,237,0.05);
+  }
+  /* Progress */
+  .progress-bar {
+    background: var(--border);
+    border-radius: 999px;
+    height: 6px; overflow: hidden;
+  }
+  .progress-fill {
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    height: 100%; border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+  /* Context menu */
+  .ctx-menu {
+    position: fixed; z-index: 300;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    min-width: 180px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    overflow: hidden;
+    animation: ctxIn 0.15s ease;
+    display: none;
+  }
+  @keyframes ctxIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .ctx-item {
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.85rem; color: var(--text-primary);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .ctx-item:hover { background: var(--bg-card); }
+  .ctx-item.danger { color: var(--danger); }
+  .ctx-divider { height: 1px; background: var(--border); margin: 4px 0; }
+  /* Tags */
+  .tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 3px 10px; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .tag.active, .tag:hover { background: var(--accent); color: white; border-color: var(--accent); }
+  /* Skeleton */
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-elevated) 50%, var(--bg-card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+  /* Floating add button */
+  .fab {
+    position: fixed; bottom: 72px; right: 16px;
+    width: 52px; height: 52px;
+    background: var(--accent);
+    border-radius: 50%; border: none;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 1.3rem;
+    box-shadow: 0 4px 20px var(--accent-glow);
+    cursor: pointer; z-index: 79;
+    transition: all 0.3s;
+  }
+  .fab:hover { transform: scale(1.1) rotate(90deg); background: var(--accent-light); }
+  .fab-menu {
+    position: fixed; bottom: 132px; right: 16px;
+    display: none; flex-direction: column; gap: 8px;
+    align-items: flex-end; z-index: 78;
+  }
+  .fab-menu.show { display: flex; }
+  .fab-item {
+    display: flex; align-items: center; gap: 10px;
+    animation: fabItemIn 0.2s ease;
+  }
+  @keyframes fabItemIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .fab-label {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 6px 12px; border-radius: 8px;
+    font-size: 0.8rem; font-weight: 500;
+    white-space: nowrap;
+  }
+  .fab-btn {
+    width: 44px; height: 44px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent-light); font-size: 1rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .fab-btn:hover { background: var(--accent); color: white; }
+  /* Chip filter */
+  .chip-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  .chip-scroll::-webkit-scrollbar { display: none; }
+  /* Recent strip */
+  .recent-strip { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+  .recent-strip::-webkit-scrollbar { display: none; }
+  .recent-item {
+    flex-shrink: 0; width: 120px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .recent-item:hover { transform: translateY(-2px); }
+  .recent-thumb {
+    width: 120px; height: 68px;
+    border-radius: 10px; overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    position: relative;
+  }
+  .recent-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .recent-title { font-size: 0.72rem; color: var(--text-secondary); margin-top: 5px; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  /* Label chip */
+  .lbl { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+  /* Stats row */
+  .stat-chip {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: flex; flex-direction: column; gap: 2px;
+    flex: 1; min-width: 90px;
+  }
+  .stat-value { font-size: 1.3rem; font-weight: 800; color: var(--accent-light); }
+  .stat-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; }
+  /* View toggle */
+  .view-btn {
+    width: 32px; height: 32px;
+    border: 1px solid var(--border);
+    background: transparent;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+    font-size: 0.8rem;
+  }
+  .view-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  /* List view */
+  .list-view .video-card {
+    display: flex; flex-direction: row; height: 72px;
+  }
+  .list-view .thumbnail-wrap { width: 128px; min-width: 128px; aspect-ratio: unset; height: 72px; }
+  .list-view .card-info { display: flex; flex-direction: column; justify-content: center; flex: 1; }
+  /* Intent button */
+  .intent-btn {
+    background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
+    border: 1px solid var(--accent);
+    color: var(--accent-light);
+    padding: 12px 20px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    text-decoration: none; font-size: 0.9rem; font-weight: 600;
+    transition: all 0.2s; cursor: pointer;
+    flex: 1;
+  }
+  .intent-btn:hover { background: var(--accent); color: white; }
+  .intent-btn.leone {
+    background: linear-gradient(135deg, #065f46, #047857);
+    border-color: #10b981;
+    color: #6ee7b7;
+  }
+  .intent-btn.leone:hover { background: #10b981; color: white; }
+  /* Premium badge */
+  .premium-badge {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    color: #000; font-size: 0.6rem; font-weight: 800;
+    padding: 2px 7px; border-radius: 999px;
+    letter-spacing: 0.5px;
+  }
+  /* Service badges */
+  .service-badge {
+    font-size: 0.6rem; font-weight: 700;
+    padding: 2px 8px; border-radius: 999px;
+    letter-spacing: 0.3px; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .badge-gofile { background: linear-gradient(135deg, #3b82f6, #60a5fa); color: white; }
+  .badge-bunkr { background: linear-gradient(135deg, #f97316, #fb923c); color: white; }
+  .badge-pixeldrain { background: linear-gradient(135deg, #7c3aed, #a78bfa); color: white; }
+  .badge-mega { background: linear-gradient(135deg, #dc2626, #f87171); color: white; }
+  .badge-gdrive { background: linear-gradient(135deg, #16a34a, #4ade80); color: white; }
+  .badge-onedrive { background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; }
+  .badge-dropbox { background: linear-gradient(135deg, #2563eb, #60a5fa); color: white; }
+  .badge-custom { background: linear-gradient(135deg, #475569, #64748b); color: white; }
+  /* Saved link card */
+  .saved-link-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .saved-link-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .saved-link-thumb {
+    width: 100%; aspect-ratio: 16/9;
+    background: var(--bg-elevated);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .saved-link-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .saved-link-thumb .fallback-icon { font-size: 2rem; color: var(--text-muted); }
+  /* Breadcrumb */
+  .breadcrumb { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .breadcrumb-item { font-size: 0.8rem; color: var(--text-muted); cursor: pointer; transition: color 0.2s; }
+  .breadcrumb-item:hover { color: var(--accent-light); }
+  .breadcrumb-sep { color: var(--text-muted); font-size: 0.7rem; }
+  
+  /* ========== ANIMATIONS ========== */
+  .fade-in { animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .slide-up { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  
+  @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes sheetDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
+  
+  .scale-in { animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+  
+  .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  
+  /* Loading Overlay */
+  .loading-overlay {
+    position: fixed; inset: 0; 
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+  }
+  .loading-overlay.show { display: flex; }
+  .loading-spinner {
+    width: 48px; height: 48px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; }
+  
+  /* Skeleton Loading */
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-elevated) 50%, var(--bg-card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: 8px;
+  }
+  @keyframes shimmer { 
+    0% { background-position: 200% 0; } 
+    100% { background-position: -200% 0; } 
+  }
+  .skeleton-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .skeleton-thumb {
+    aspect-ratio: 16/9;
+    background: linear-gradient(90deg, var(--bg-elevated) 25%, var(--bg-card) 50%, var(--bg-elevated) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+  .skeleton-line {
+    height: 12px;
+    background: linear-gradient(90deg, var(--bg-elevated) 25%, var(--bg-card) 50%, var(--bg-elevated) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: 6px;
+    margin: 8px 12px;
+  }
+  .skeleton-line.short { width: 60%; }
+  
+  /* Theme Selector */
+  .theme-option {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .theme-option:hover { transform: scale(1.1); }
+  .theme-option.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+  .theme-option::after {
+    content: '✓';
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 0.8rem; font-weight: bold;
+    opacity: 0; transition: opacity 0.2s;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  .theme-option.active::after { opacity: 1; }
+  
+  /* Ripple effect */
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  .ripple::after {
+    content: '';
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, transparent 10%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0%;
+    transition: background-size 0.5s ease;
+  }
+  .ripple:active::after { background-size: 300%; transition: background-size 0s; }
+  
+  /* Floating label input */
+  .input-wrapper {
+    position: relative;
+  }
+  .input-wrapper .input-field { padding-top: 20px; }
+  .input-wrapper .floating-label {
+    position: absolute;
+    top: 50%; left: 14px;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    pointer-events: none;
+  }
+  .input-wrapper .input-field:focus + .floating-label,
+  .input-wrapper .input-field:not(:placeholder-shown) + .floating-label {
+    top: 8px; transform: translateY(0);
+    font-size: 0.65rem; color: var(--accent-light);
+  }
+  
+  /* Animated counter */
+  .counter { display: inline-block; }
+  
+  /* Status indicator */
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .status-dot.online { background: var(--success); box-shadow: 0 0 8px var(--success); }
+  .status-dot.offline { background: var(--text-muted); }
+  
+  /* Card hover glow */
+  .glow-hover {
+    transition: all 0.3s ease;
+  }
+  .glow-hover:hover {
+    box-shadow: 0 8px 32px var(--accent-glow), 0 0 0 1px var(--accent);
+  }
+  
+  /* Stagger animation for grids */
+  .stagger-item { opacity: 0; animation: fadeIn 0.4s ease forwards; }
+  .stagger-item:nth-child(1) { animation-delay: 0.05s; }
+  .stagger-item:nth-child(2) { animation-delay: 0.1s; }
+  .stagger-item:nth-child(3) { animation-delay: 0.15s; }
+  .stagger-item:nth-child(4) { animation-delay: 0.2s; }
+  .stagger-item:nth-child(5) { animation-delay: 0.25s; }
+  .stagger-item:nth-child(6) { animation-delay: 0.3s; }
+  .stagger-item:nth-child(7) { animation-delay: 0.35s; }
+  .stagger-item:nth-child(8) { animation-delay: 0.4s; }
+  
+  /* Empty state illustration */
+  .empty-illustration {
+    width: 120px; height: 120px;
+    background: var(--bg-elevated);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+  .empty-illustration::before {
+    content: '';
+    position: absolute; inset: -4px;
+    border-radius: 50%;
+    border: 2px dashed var(--border);
+    animation: spin 20s linear infinite;
+  }
+  .empty-illustration i { font-size: 3rem; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loadingText">Loading...</div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="topnav flex items-center gap-3 px-4">
+  <button onclick="toggleSidebar()" class="btn-icon flex-shrink-0" id="menuBtn">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <span class="logo-text flex-shrink-0">Pixedrain™</span>
+  <div class="flex-1 relative mx-2">
+    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-xs" style="color:var(--text-muted)"></i>
+    <input id="searchInput" class="search-input" type="text" placeholder="Search videos, albums..." oninput="handleSearch(this.value)"/>
+  </div>
+  <button onclick="toggleSidebar()" class="btn-icon flex-shrink-0">
+    <i class="fa-solid fa-bell text-xs"></i>
+  </button>
+</nav>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="p-4 border-b" style="border-color:var(--border)">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background:var(--accent)">PD</div>
+      <div>
+        <div class="font-semibold text-sm" style="color:var(--text-primary)">My Library</div>
+        <span class="premium-badge">PREMIUM</span>
+      </div>
+    </div>
+  </div>
+  <div class="py-2">
+    <div class="lbl px-5 py-2">MAIN</div>
+    <div class="nav-item active" onclick="switchTab('home');closeSidebar()"><i class="fa-solid fa-house"></i>Home</div>
+    <div class="nav-item" onclick="switchTab('continue');closeSidebar()"><i class="fa-solid fa-play-circle"></i>Continue Watching</div>
+    <div class="nav-item" onclick="switchTab('pinned');closeSidebar()"><i class="fa-solid fa-thumbtack"></i>Pinned</div>
+    <div class="lbl px-5 py-2 mt-2">LIBRARY</div>
+    <div class="nav-item" onclick="switchTab('videos');closeSidebar()"><i class="fa-solid fa-film"></i>My Videos</div>
+    <div class="nav-item" onclick="switchTab('albums');closeSidebar()"><i class="fa-solid fa-layer-group"></i>Albums</div>
+    <div class="nav-item" onclick="switchTab('folders');closeSidebar()"><i class="fa-solid fa-folder"></i>Folders</div>
+    <div class="nav-item" onclick="switchTab('sources');closeSidebar()"><i class="fa-solid fa-link-slash"></i>Source Links</div>
+    <div class="lbl px-5 py-2 mt-2">TOOLS</div>
+    <div class="nav-item" onclick="switchTab('import');closeSidebar()"><i class="fa-solid fa-link"></i>Import from Link</div>
+    <div class="nav-item" onclick="openM3UModal();closeSidebar()"><i class="fa-solid fa-list"></i>Generate M3U</div>
+    <div class="nav-item" onclick="switchTab('tester');closeSidebar()"><i class="fa-solid fa-vial"></i>Link Tester</div>
+    <div class="nav-item" onclick="switchTab('settings');closeSidebar()"><i class="fa-solid fa-gear"></i>Settings</div>
+  </div>
+  <div class="p-4 mt-4" style="border-top:1px solid var(--border)">
+    <div class="stat-chip">
+      <div class="stat-value" id="totalFilesCount">0</div>
+      <div class="stat-label">Total Videos</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="main pb-20 px-4 py-4" id="mainContent">
+
+  <!-- HOME TAB -->
+  <div id="tab-home" class="fade-in">
+    <!-- Pinned -->
+    <div id="pinnedSection" class="mb-5" style="display:none">
+      <div class="section-title mb-3"><i class="fa-solid fa-thumbtack" style="color:var(--warning)"></i> Pinned</div>
+      <div class="recent-strip" id="pinnedStrip"></div>
+    </div>
+    <!-- Filter chips -->
+    <div class="chip-scroll mb-4" id="filterChips">
+      <span class="tag active" onclick="filterVideos('all',this)">All</span>
+      <span class="tag" onclick="filterVideos('pinned',this)"><i class="fa-solid fa-thumbtack text-xs"></i> Pinned</span>
+      <span class="tag" onclick="filterVideos('recent',this)">Recent</span>
+    </div>
+    <!-- Videos header -->
+    <div class="flex items-center justify-between mb-3">
+      <div class="section-title">All Videos</div>
+      <div class="flex gap-2">
+        <button class="view-btn active" id="gridViewBtn" onclick="setView('grid')"><i class="fa-solid fa-grip"></i></button>
+        <button class="view-btn" id="listViewBtn" onclick="setView('list')"><i class="fa-solid fa-list"></i></button>
+      </div>
+    </div>
+    <div id="videoGrid" class="video-grid"></div>
+    <div id="emptyHome" class="text-center py-16" style="display:none">
+      <div class="empty-illustration">
+        <i class="fa-solid fa-film"></i>
+      </div>
+      <h3 style="color:var(--text-primary);font-weight:600;margin-bottom:8px">No videos yet</h3>
+      <p style="color:var(--text-muted)" class="text-sm mb-4">Start building your library by importing videos</p>
+      <button class="btn-primary" onclick="openQuickImportModal()"><i class="fa-solid fa-plus mr-2"></i>Add Your First Video</button>
+    </div>
+  </div>
+
+  <!-- VIDEOS TAB -->
+  <div id="tab-videos" class="fade-in" style="display:none">
+    <div class="flex items-center justify-between mb-4">
+      <div class="section-title"><i class="fa-solid fa-film"></i> My Videos</div>
+    </div>
+    <div class="video-grid" id="allVideosGrid"></div>
+    <div id="emptyVideos" class="text-center py-16" style="display:none">
+      <i class="fa-solid fa-film text-5xl mb-4" style="color:var(--text-muted)"></i>
+      <p style="color:var(--text-muted)" class="text-sm">No videos in your library.</p>
+    </div>
+  </div>
+
+  <!-- ALBUMS TAB -->
+  <div id="tab-albums" class="fade-in" style="display:none">
+    <div class="flex items-center justify-between mb-4">
+      <div class="section-title"><i class="fa-solid fa-layer-group"></i> Albums</div>
+    </div>
+    <div id="albumsGrid" class="grid gap-3" style="grid-template-columns:repeat(2,1fr)"></div>
+    <div id="emptyAlbums" class="text-center py-16" style="display:none">
+      <i class="fa-solid fa-layer-group text-5xl mb-4" style="color:var(--text-muted)"></i>
+      <p style="color:var(--text-muted)" class="text-sm">No albums yet.</p>
+    </div>
+    <!-- Album detail view -->
+    <div id="albumDetail" style="display:none">
+      <div class="flex items-center gap-3 mb-4">
+        <button class="btn-icon" onclick="closeAlbumDetail()"><i class="fa-solid fa-arrow-left"></i></button>
+        <h2 class="font-bold" id="albumDetailTitle"></h2>
+      </div>
+      <div class="video-grid" id="albumDetailGrid"></div>
+    </div>
+  </div>
+
+  <!-- FOLDERS TAB -->
+  <div id="tab-folders" class="fade-in" style="display:none">
+    <div class="flex items-center gap-3 mb-4">
+      <button class="btn-icon" id="folderBackBtn" onclick="goBackFolder()" style="display:none"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="section-title flex-1"><i class="fa-solid fa-folder"></i> <span id="folderTitle">Folders</span></div>
+    </div>
+    <!-- Breadcrumb -->
+    <div class="breadcrumb mb-4" id="breadcrumb">
+      <span class="breadcrumb-item" onclick="navigateFolder(null)"><i class="fa-solid fa-house text-xs mr-1"></i>Root</span>
+    </div>
+    <div id="foldersGrid" class="grid gap-3" style="grid-template-columns:repeat(2,1fr)"></div>
+    <div id="folderVideosGrid" class="video-grid mt-4"></div>
+    <div id="folderSavedLinks"></div>
+    <div id="folderNonVideos"></div>
+    <div id="emptyFolders" class="text-center py-16" style="display:none">
+      <i class="fa-solid fa-folder-open text-5xl mb-4" style="color:var(--text-muted)"></i>
+      <p style="color:var(--text-muted)" class="text-sm">No folders yet. Add links or create folders using +</p>
+    </div>
+  </div>
+
+  <!-- CONTINUE WATCHING TAB -->
+  <div id="tab-continue" class="fade-in" style="display:none">
+    <div class="flex items-center gap-3 mb-4">
+      <button class="btn-icon" onclick="switchTab('home')"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="section-title flex-1"><i class="fa-solid fa-play-circle"></i> Continue Watching</div>
+    </div>
+    <div class="video-grid" id="continueGrid"></div>
+    <div id="emptyContinue" class="text-center py-16" style="display:none">
+      <i class="fa-solid fa-play-circle text-5xl mb-4" style="color:var(--text-muted)"></i>
+      <p style="color:var(--text-muted)" class="text-sm">Nothing watched recently.</p>
+    </div>
+  </div>
+
+  <!-- PINNED TAB -->
+  <div id="tab-pinned" class="fade-in" style="display:none">
+    <div class="flex items-center gap-3 mb-4">
+      <button class="btn-icon" onclick="switchTab('home')"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="section-title flex-1"><i class="fa-solid fa-thumbtack"></i> Pinned Videos</div>
+    </div>
+    <div class="video-grid" id="pinnedGrid"></div>
+    <div id="emptyPinned" class="text-center py-16" style="display:none">
+      <i class="fa-solid fa-thumbtack text-5xl mb-4" style="color:var(--text-muted)"></i>
+      <p style="color:var(--text-muted)" class="text-sm">No pinned videos.</p>
+    </div>
+  </div>
+
+  <!-- SOURCE LINKS TAB -->
+  <div id="tab-sources" class="fade-in" style="display:none">
+    <div class="flex items-center gap-3 mb-4">
+      <button class="btn-icon" onclick="switchTab('home')"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="section-title flex-1"><i class="fa-solid fa-link-slash"></i> Source Links</div>
+    </div>
+    <p class="text-sm mb-4" style="color:var(--text-secondary)">Original import links with sync history</p>
+    <div id="sourcesList"></div>
+    <div id="emptySources" class="text-center py-16" style="display:none">
+      <i class="fa-solid fa-link text-5xl mb-4" style="color:var(--text-muted)"></i>
+      <p style="color:var(--text-muted)" class="text-sm">No source links imported yet.</p>
+    </div>
+  </div>
+
+  <!-- IMPORT TAB -->
+  <div id="tab-import" class="fade-in" style="display:none">
+    <div class="flex items-center gap-3 mb-4">
+      <button class="btn-icon" onclick="switchTab('home')"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="section-title flex-1"><i class="fa-solid fa-link"></i> Import from Link</div>
+    </div>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:20px;">
+      <p class="text-sm mb-3" style="color:var(--text-secondary)">Paste a Pixeldrain link to import a video or album.</p>
+      <input type="text" id="importLinkInput" class="input-field mb-3" placeholder="https://pixeldrain.com/u/... or /l/..."/>
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Custom Folder Name <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input type="text" id="importFolderName" class="input-field" placeholder="e.g. My Movies Collection"/>
+        <p class="text-xs mt-1" style="color:var(--text-muted)">Videos will be placed inside this folder. Leave blank to use default.</p>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn-primary flex-1" onclick="importFromLink()"><i class="fa-solid fa-download"></i> Import</button>
+      </div>
+      <div id="importResult" class="mt-4" style="display:none"></div>
+    </div>
+    <div class="mt-5" style="background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:20px;">
+      <div class="section-title mb-3">Upload Video File</div>
+      <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+        <i class="fa-solid fa-cloud-arrow-up text-3xl mb-3" style="color:var(--accent)"></i>
+        <p class="text-sm font-semibold mb-1" style="color:var(--text-primary)">Drop video here or tap to browse</p>
+        <p class="text-xs" style="color:var(--text-muted)">Supports MP4, MKV, AVI, MOV and more</p>
+        <input type="file" id="fileInput" accept="video/*" style="display:none" onchange="handleFileUpload(event)"/>
+      </div>
+      <div id="uploadProgress" style="display:none" class="mt-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm" style="color:var(--text-secondary)" id="uploadFileName"></span>
+          <span class="text-sm font-bold" style="color:var(--accent-light)" id="uploadPercent">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LINK TESTER TAB -->
+  <div id="tab-tester" class="fade-in" style="display:none">
+    <div class="flex items-center gap-3 mb-4">
+      <button class="btn-icon" onclick="switchTab('home')"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="section-title flex-1"><i class="fa-solid fa-vial"></i> Link Tester</div>
+    </div>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:16px">
+      <p class="text-sm mb-4" style="color:var(--text-secondary)">Test if your video links are still valid on Pixeldrain. Invalid links can be automatically removed.</p>
+      
+      <div class="mb-4">
+        <label class="lbl mb-2 block">Test Scope</label>
+        <select id="testerScope" class="input-field" onchange="updateTesterCount()">
+          <option value="all">All Videos</option>
+          <option value="folder">Specific Folder</option>
+        </select>
+      </div>
+      
+      <div class="mb-4" id="testerFolderSelect" style="display:none">
+        <label class="lbl mb-2 block">Select Folder</label>
+        <select id="testerFolder" class="input-field" onchange="updateTesterCount()"></select>
+      </div>
+      
+      <div style="background:var(--bg-elevated);border-radius:10px;padding:12px;margin-bottom:16px">
+        <div class="flex items-center justify-between">
+          <span class="text-sm" style="color:var(--text-secondary)">Videos to test:</span>
+          <span class="text-sm font-bold" style="color:var(--accent-light)" id="testerCount">0</span>
+        </div>
+      </div>
+      
+      <div class="flex gap-3">
+        <button class="btn-primary flex-1" id="startTestBtn" onclick="startLinkTest()">
+          <i class="fa-solid fa-play"></i> Start Test
+        </button>
+        <button class="btn-ghost" id="stopTestBtn" onclick="stopLinkTest()" style="display:none">
+          <i class="fa-solid fa-stop"></i> Stop
+        </button>
+      </div>
+    </div>
+    
+    <!-- Test Progress -->
+    <div id="testerProgress" style="display:none;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-sm font-semibold" style="color:var(--text-primary)">Testing Progress</span>
+        <span class="text-sm" style="color:var(--text-muted)" id="testerProgressText">0 / 0</span>
+      </div>
+      <div class="progress-bar mb-3">
+        <div class="progress-fill" id="testerProgressBar" style="width:0%"></div>
+      </div>
+      <div class="flex gap-4 text-xs" style="color:var(--text-muted)">
+        <span><i class="fa-solid fa-circle-check mr-1" style="color:var(--success)"></i> Valid: <span id="testerValid">0</span></span>
+        <span><i class="fa-solid fa-circle-xmark mr-1" style="color:var(--danger)"></i> Invalid: <span id="testerInvalid">0</span></span>
+        <span><i class="fa-solid fa-clock mr-1"></i> Pending: <span id="testerPending">0</span></span>
+      </div>
+    </div>
+    
+    <!-- Test Results -->
+    <div id="testerResults" style="display:none">
+      <div class="flex items-center justify-between mb-3">
+        <div class="section-title" style="font-size:0.9rem"><i class="fa-solid fa-circle-xmark" style="color:var(--danger)"></i> Invalid Links</div>
+        <button class="btn-danger" id="removeInvalidBtn" onclick="removeInvalidLinks()" style="display:none;padding:6px 12px;font-size:0.75rem">
+          <i class="fa-solid fa-trash"></i> Remove All Invalid
+        </button>
+      </div>
+      <div id="invalidLinksList"></div>
+      <div id="noInvalidLinks" class="text-center py-8" style="display:none">
+        <i class="fa-solid fa-circle-check text-3xl mb-3" style="color:var(--success)"></i>
+        <p class="text-sm" style="color:var(--success)">All links are valid! 🎉</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS TAB -->
+  <div id="tab-settings" class="fade-in" style="display:none">
+    <div class="flex items-center gap-3 mb-4">
+      <button class="btn-icon" onclick="switchTab('home')"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="section-title flex-1"><i class="fa-solid fa-gear"></i> Settings</div>
+    </div>
+    <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:14px; overflow:hidden;">
+      <div class="p-4 border-b" style="border-color:var(--border)">
+        <div class="lbl mb-3">APPEARANCE</div>
+        <label class="text-xs mb-2 block" style="color:var(--text-secondary)">Theme</label>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px" id="themeSelector">
+          <div class="theme-option active" data-theme="dark" onclick="setTheme('dark')" title="Dark" style="background:linear-gradient(135deg, #0a0a0f 50%, #7c3aed 50%)"></div>
+          <div class="theme-option" data-theme="light" onclick="setTheme('light')" title="Light" style="background:linear-gradient(135deg, #f8fafc 50%, #7c3aed 50%)"></div>
+          <div class="theme-option" data-theme="midnight" onclick="setTheme('midnight')" title="Midnight Blue" style="background:linear-gradient(135deg, #020617 50%, #3b82f6 50%)"></div>
+          <div class="theme-option" data-theme="amoled" onclick="setTheme('amoled')" title="AMOLED Black" style="background:linear-gradient(135deg, #000000 50%, #bb86fc 50%)"></div>
+          <div class="theme-option" data-theme="sunset" onclick="setTheme('sunset')" title="Sunset" style="background:linear-gradient(135deg, #1a1423 50%, #f97316 50%)"></div>
+        </div>
+        <p class="text-xs" style="color:var(--text-muted)">Choose your preferred color theme</p>
+      </div>
+      <div class="p-4 border-b" style="border-color:var(--border)">
+        <div class="lbl mb-3">API CONFIGURATION</div>
+        <label class="text-xs mb-1 block" style="color:var(--text-secondary)">Pixeldrain API Key</label>
+        <div style="position:relative;margin-bottom:12px">
+          <input type="password" id="apiKeyInput" class="input-field" placeholder="Enter your API key" style="padding-right:40px"/>
+          <button onclick="toggleApiKey()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);cursor:pointer;padding:4px;font-size:0.8rem" id="apiKeyToggle" title="Show/Hide">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+        <button class="btn-primary" onclick="saveSettings()"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+      </div>
+      <div class="p-4 border-b" style="border-color:var(--border)">
+        <div class="lbl mb-3">PLAYER SETTINGS</div>
+        <label class="flex items-center justify-between">
+          <span class="text-sm" style="color:var(--text-primary)">Auto-play next video</span>
+          <input type="checkbox" id="autoplay" class="accent-purple-600 w-4 h-4" checked/>
+        </label>
+      </div>
+      <div class="p-4 border-b" style="border-color:var(--border)">
+        <div class="lbl mb-3">BACKUP & RESTORE</div>
+        <div class="flex gap-3 mb-2">
+          <button class="btn-primary flex-1" onclick="exportData()"><i class="fa-solid fa-download"></i> Export Data</button>
+          <button class="btn-ghost flex-1" onclick="document.getElementById('importFileInput').click()"><i class="fa-solid fa-upload"></i> Import Data</button>
+        </div>
+        <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="importData(event)"/>
+        <p class="text-xs" style="color:var(--text-muted)">Export all your library data as JSON backup</p>
+      </div>
+      <div class="p-4">
+        <div class="lbl mb-3">DANGER ZONE</div>
+        <button class="btn-danger w-full" onclick="clearAllData()"><i class="fa-solid fa-trash"></i> Clear All Library Data</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH RESULTS -->
+  <div id="tab-search" class="fade-in" style="display:none">
+    <div class="flex items-center gap-3 mb-4">
+      <button class="btn-icon" onclick="closeSearch()"><i class="fa-solid fa-arrow-left"></i></button>
+      <div class="section-title">Search Results</div>
+    </div>
+    <div class="video-grid" id="searchGrid"></div>
+    <div id="emptySearch" class="text-center py-16" style="display:none">
+      <i class="fa-solid fa-magnifying-glass text-5xl mb-4" style="color:var(--text-muted)"></i>
+      <p style="color:var(--text-muted)" class="text-sm" id="searchEmptyMsg">Type to search...</p>
+    </div>
+  </div>
+</main>
+
+<!-- BOTTOM TAB BAR -->
+<div class="tab-bar">
+  <div class="tab-item active" id="tabBtn-home" onclick="switchTab('home')"><i class="fa-solid fa-house"></i><span>Home</span></div>
+  <div class="tab-item" id="tabBtn-videos" onclick="switchTab('videos')"><i class="fa-solid fa-film"></i><span>Videos</span></div>
+  <div class="tab-item" id="tabBtn-albums" onclick="switchTab('albums')"><i class="fa-solid fa-layer-group"></i><span>Albums</span></div>
+  <div class="tab-item" id="tabBtn-folders" onclick="switchTab('folders')"><i class="fa-solid fa-folder"></i><span>Folders</span></div>
+  <div class="tab-item" id="tabBtn-pinned" onclick="switchTab('pinned')"><i class="fa-solid fa-thumbtack"></i><span>Pinned</span></div>
+</div>
+
+<!-- FAB -->
+<button class="fab" id="fabBtn" onclick="toggleFabMenu()"><i class="fa-solid fa-plus" id="fabIcon"></i></button>
+<div class="fab-menu" id="fabMenu">
+  <div class="fab-item" style="animation-delay:0s">
+    <span class="fab-label">Import from Link</span>
+    <button class="fab-btn" onclick="openQuickImportModal();closeFab()"><i class="fa-solid fa-download"></i></button>
+  </div>
+  <div class="fab-item" style="animation-delay:0.05s">
+    <span class="fab-label">Save External Link</span>
+    <button class="fab-btn" onclick="openSavedLinkModal();closeFab()"><i class="fa-solid fa-bookmark"></i></button>
+  </div>
+  <div class="fab-item" style="animation-delay:0.1s">
+    <span class="fab-label">Add Video Link</span>
+    <button class="fab-btn" onclick="openAddVideoModal();closeFab()"><i class="fa-solid fa-link"></i></button>
+  </div>
+  <div class="fab-item" style="animation-delay:0.15s">
+    <span class="fab-label">Create Album</span>
+    <button class="fab-btn" onclick="openCreateAlbumModal();closeFab()"><i class="fa-solid fa-layer-group"></i></button>
+  </div>
+  <div class="fab-item" style="animation-delay:0.2s">
+    <span class="fab-label">Create Folder</span>
+    <button class="fab-btn" onclick="openCreateFolderModal();closeFab()"><i class="fa-solid fa-folder-plus"></i></button>
+  </div>
+  <div class="fab-item" style="animation-delay:0.25s">
+    <span class="fab-label">Upload File</span>
+    <button class="fab-btn" onclick="switchTab('import');closeFab()"><i class="fa-solid fa-cloud-arrow-up"></i></button>
+  </div>
+</div>
+
+<!-- === MODALS === -->
+
+<!-- QUICK IMPORT MODAL (from FAB +) -->
+<div class="modal-bg" id="quickImportModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-download mr-2" style="color:var(--accent)"></i>Import from Link</span>
+      <button class="btn-icon" onclick="closeModal('quickImportModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Pixeldrain URL</label>
+        <input type="url" id="quickImportUrl" class="input-field" placeholder="https://pixeldrain.com/u/... or /l/..."/>
+      </div>
+      <div class="mb-4">
+        <label class="lbl mb-2 block">Custom Folder Name <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input type="text" id="quickImportFolder" class="input-field" placeholder="e.g. My Movies Collection"/>
+        <p class="text-xs mt-1" style="color:var(--text-muted)">Videos will be placed inside this folder</p>
+      </div>
+      <div id="quickImportStatus" style="display:none" class="mb-3"></div>
+      <div class="flex gap-3">
+        <button class="btn-ghost flex-1" onclick="closeModal('quickImportModal')">Cancel</button>
+        <button class="btn-primary flex-1" id="quickImportBtn" onclick="quickImport()"><i class="fa-solid fa-download"></i> Import</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD VIDEO MODAL -->
+<div class="modal-bg" id="addVideoModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-link mr-2" style="color:var(--accent)"></i>Add Video Link</span>
+      <button class="btn-icon" onclick="closeModal('addVideoModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Pixeldrain URL</label>
+        <input type="url" id="videoUrlInput" class="input-field" placeholder="https://pixeldrain.com/u/..." oninput="previewVideoUrl()"/>
+      </div>
+      <div id="urlPreview" style="display:none" class="mb-3">
+        <div style="background:var(--bg-elevated); border-radius:10px; overflow:hidden; border:1px solid var(--border)">
+          <img id="urlPreviewThumb" src="" class="w-full" style="max-height:160px; object-fit:cover"/>
+          <div class="p-3">
+            <div class="text-sm font-semibold" id="urlPreviewTitle"></div>
+            <div class="text-xs mt-1" style="color:var(--text-muted)" id="urlPreviewId"></div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Custom Name (optional)</label>
+        <input type="text" id="videoNameInput" class="input-field" placeholder="Video name..."/>
+      </div>
+      <div class="mb-4">
+        <label class="lbl mb-2 block">Add to Album (optional)</label>
+        <select id="videoAlbumSelect" class="input-field">
+          <option value="">None</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="lbl mb-2 block">Add to Folder (optional)</label>
+        <select id="videoFolderSelect" class="input-field">
+          <option value="">None</option>
+        </select>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn-ghost flex-1" onclick="closeModal('addVideoModal')">Cancel</button>
+        <button class="btn-primary flex-1" onclick="addVideo()"><i class="fa-solid fa-plus"></i> Add Video</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE ALBUM MODAL -->
+<div class="modal-bg" id="createAlbumModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-layer-group mr-2" style="color:var(--accent)"></i>Create Album</span>
+      <button class="btn-icon" onclick="closeModal('createAlbumModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Album Name</label>
+        <input type="text" id="albumNameInput" class="input-field" placeholder="My Awesome Album"/>
+      </div>
+      <div class="mb-4">
+        <label class="lbl mb-2 block">Select Videos</label>
+        <div id="albumVideoSelect" class="grid gap-2" style="max-height:200px; overflow-y:auto"></div>
+      </div>
+      <div class="mb-3 flex items-center gap-2">
+        <input type="checkbox" id="pushToPixeldrain" class="accent-purple-600"/>
+        <label for="pushToPixeldrain" class="text-sm" style="color:var(--text-secondary)">Also create on Pixeldrain (as list)</label>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn-ghost flex-1" onclick="closeModal('createAlbumModal')">Cancel</button>
+        <button class="btn-primary flex-1" onclick="createAlbum()"><i class="fa-solid fa-plus"></i> Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE FOLDER MODAL -->
+<div class="modal-bg" id="createFolderModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-folder-plus mr-2" style="color:var(--accent)"></i>Create Folder</span>
+      <button class="btn-icon" onclick="closeModal('createFolderModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-4">
+        <label class="lbl mb-2 block">Folder Name</label>
+        <input type="text" id="folderNameInput" class="input-field" placeholder="My Folder"/>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn-ghost flex-1" onclick="closeModal('createFolderModal')">Cancel</button>
+        <button class="btn-primary flex-1" onclick="createFolder()"><i class="fa-solid fa-plus"></i> Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAVE EXTERNAL LINK MODAL -->
+<div class="modal-bg" id="savedLinkModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-bookmark mr-2" style="color:var(--accent)"></i>Save External Link</span>
+      <button class="btn-icon" onclick="closeModal('savedLinkModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Link URL <span style="color:var(--danger)">*</span></label>
+        <input type="url" id="savedLinkUrl" class="input-field" placeholder="https://gofile.io/d/... or any URL"/>
+      </div>
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Name <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="savedLinkName" class="input-field" placeholder="My Collection"/>
+      </div>
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Service / Badge</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px" id="badgeSelector">
+          <span class="service-badge badge-gofile" style="cursor:pointer;opacity:0.5" onclick="selectBadge('gofile',this)">Gofile</span>
+          <span class="service-badge badge-bunkr" style="cursor:pointer;opacity:0.5" onclick="selectBadge('bunkr',this)">Bunkr</span>
+          <span class="service-badge badge-pixeldrain" style="cursor:pointer;opacity:0.5" onclick="selectBadge('pixeldrain',this)">Pixeldrain</span>
+          <span class="service-badge badge-mega" style="cursor:pointer;opacity:0.5" onclick="selectBadge('mega',this)">Mega</span>
+          <span class="service-badge badge-gdrive" style="cursor:pointer;opacity:0.5" onclick="selectBadge('gdrive',this)">GDrive</span>
+          <span class="service-badge badge-dropbox" style="cursor:pointer;opacity:0.5" onclick="selectBadge('dropbox',this)">Dropbox</span>
+          <span class="service-badge badge-custom" style="cursor:pointer;opacity:0.5" onclick="selectBadge('custom',this)">Custom</span>
+        </div>
+        <input type="text" id="savedLinkBadgeCustom" class="input-field" placeholder="Custom badge text (e.g. MyCloud)" style="display:none"/>
+        <input type="hidden" id="savedLinkBadge" value=""/>
+      </div>
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Thumbnail URL <span style="font-weight:400;text-transform:none">(optional)</span></label>
+        <input type="url" id="savedLinkThumb" class="input-field" placeholder="https://example.com/thumb.jpg"/>
+        <p class="text-xs mt-1" style="color:var(--text-muted)">Paste an image URL for folder preview</p>
+      </div>
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Details <span style="font-weight:400;text-transform:none">(optional)</span></label>
+        <textarea id="savedLinkDetails" class="input-field" rows="2" placeholder="e.g. 50 videos, 10GB total" style="resize:none"></textarea>
+      </div>
+      <div class="mb-4">
+        <label class="lbl mb-2 block">Save to Folder <span style="font-weight:400;text-transform:none">(optional)</span></label>
+        <select id="savedLinkFolder" class="input-field">
+          <option value="">Root (No folder)</option>
+        </select>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn-ghost flex-1" onclick="closeModal('savedLinkModal')">Cancel</button>
+        <button class="btn-primary flex-1" onclick="saveLinkEntry()"><i class="fa-solid fa-bookmark"></i> Save Link</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- M3U MODAL -->
+<div class="modal-bg" id="m3uModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title"><i class="fa-solid fa-list mr-2" style="color:var(--accent)"></i>Generate M3U Playlist</span>
+      <button class="btn-icon" onclick="closeModal('m3uModal')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Playlist Name</label>
+        <input type="text" id="m3uName" class="input-field" value="My Playlist"/>
+      </div>
+      <div class="mb-3">
+        <label class="lbl mb-2 block">Source</label>
+        <select id="m3uSource" class="input-field" onchange="toggleM3uFolder()">
+          <option value="all">All Videos</option>
+          <option value="pinned">Pinned Only</option>
+          <option value="folder">From Folder</option>
+          <option value="album">From Album</option>
+        </select>
+      </div>
+      <div class="mb-3" id="m3uFolderSelect" style="display:none">
+        <label class="lbl mb-2 block">Select Folder</label>
+        <select id="m3uFolder" class="input-field"></select>
+      </div>
+      <div class="mb-3" id="m3uAlbumSelect" style="display:none">
+        <label class="lbl mb-2 block">Select Album</label>
+        <select id="m3uAlbum" class="input-field"></select>
+      </div>
+      <div id="m3uPreview" class="mb-4" style="display:none">
+        <label class="lbl mb-2 block">Preview (<span id="m3uCount">0</span> videos)</label>
+        <textarea id="m3uContent" class="input-field font-mono text-xs" rows="8" readonly style="resize:none"></textarea>
+      </div>
+      <div class="flex gap-3">
+        <button class="btn-ghost flex-1" onclick="previewM3U()"><i class="fa-solid fa-eye"></i> Preview</button>
+        <button class="btn-primary flex-1" onclick="downloadM3U()"><i class="fa-solid fa-download"></i> Download</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO DETAIL SHEET -->
+<div class="modal-bg" id="playerModal" style="align-items:flex-end;padding:0">
+  <div id="playerSheet" style="width:100%;max-width:500px;background:var(--bg-card);border-radius:20px 20px 0 0;max-height:92vh;overflow-y:auto;animation:sheetUp 0.35s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -8px 40px rgba(0,0,0,0.5)">
+    
+    <!-- Drag Handle -->
+    <div style="display:flex;justify-content:center;padding:10px 0 4px;cursor:grab" onclick="closePlayer()">
+      <div style="width:36px;height:4px;border-radius:4px;background:var(--text-muted);opacity:0.4"></div>
+    </div>
+    
+    <!-- Hero Thumbnail -->
+    <div style="position:relative;margin:0 12px 0">
+      <div style="border-radius:14px;overflow:hidden;aspect-ratio:16/9;background:#0d0d1a;position:relative">
+        <img id="playerThumb" src="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 9%22><rect fill=%22%230d0d1a%22 width=%2216%22 height=%229%22/></svg>'"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.7))"></div>
+        <!-- Floating actions on thumbnail -->
+        <div style="position:absolute;top:10px;right:10px;display:flex;gap:6px">
+          <button onclick="pinCurrentVideo()" id="playerPinBtn" title="Pin" style="width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);color:var(--text-primary);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.75rem;transition:all 0.2s"><i class="fa-solid fa-thumbtack"></i></button>
+          <button onclick="shareCurrentVideo()" title="Share" style="width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);color:var(--text-primary);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.75rem;transition:all 0.2s"><i class="fa-solid fa-share-nodes"></i></button>
+        </div>
+        <!-- File ID chip -->
+        <div style="position:absolute;bottom:10px;left:10px">
+          <span id="playerFileId" style="background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);color:rgba(255,255,255,0.8);font-size:0.65rem;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:0.3px;font-family:monospace"></span>
+        </div>
+        <!-- Status chip -->
+        <div style="position:absolute;bottom:10px;right:10px">
+          <span id="playerStatus" style="background:rgba(16,185,129,0.25);backdrop-filter:blur(8px);color:#6ee7b7;font-size:0.62rem;font-weight:700;padding:4px 10px;border-radius:20px;display:flex;align-items:center;gap:4px"><span class="status-dot online"></span>LIVE</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Title & Meta -->
+    <div style="padding:14px 16px 0">
+      <h2 id="playerTitle" style="font-size:1rem;font-weight:700;color:var(--text-primary);line-height:1.4;margin-bottom:6px;word-break:break-word"></h2>
+      <div id="playerFolder" style="font-size:0.72rem;color:var(--text-muted);display:flex;align-items:center;gap:5px;margin-bottom:12px">
+        <i class="fa-solid fa-folder" style="font-size:0.6rem"></i>
+        <span id="playerFolderName">Root</span>
+      </div>
+    </div>
+    
+    <!-- Info Grid -->
+    <div style="padding:0 16px 12px">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div style="background:var(--bg-elevated);border-radius:12px;padding:10px 8px;text-align:center">
+          <div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Size</div>
+          <div style="font-size:0.78rem;font-weight:700;color:var(--text-primary)" id="playerSize">—</div>
+        </div>
+        <div style="background:var(--bg-elevated);border-radius:12px;padding:10px 8px;text-align:center">
+          <div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Type</div>
+          <div style="font-size:0.78rem;font-weight:700;color:var(--text-primary)" id="playerType">—</div>
+        </div>
+        <div style="background:var(--bg-elevated);border-radius:12px;padding:10px 8px;text-align:center">
+          <div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Views</div>
+          <div style="font-size:0.78rem;font-weight:700;color:var(--accent-light)" id="playerViews">—</div>
+        </div>
+        <div style="background:var(--bg-elevated);border-radius:12px;padding:10px 8px;text-align:center">
+          <div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Added</div>
+          <div style="font-size:0.78rem;font-weight:700;color:var(--text-primary)" id="playerDate">—</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Stream Link -->
+    <div style="padding:0 16px 12px">
+      <div style="background:var(--bg-elevated);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer" onclick="copyStreamLink()">
+        <i class="fa-solid fa-link" style="color:var(--accent);font-size:0.75rem;flex-shrink:0"></i>
+        <input type="text" id="streamLinkInput" readonly style="flex:1;background:transparent;border:none;outline:none;color:var(--accent-light);font-size:0.72rem;font-family:monospace;cursor:pointer;min-width:0"/>
+        <i class="fa-solid fa-copy" style="color:var(--text-muted);font-size:0.75rem;flex-shrink:0"></i>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div style="padding:0 16px 14px;display:flex;gap:8px">
+      <button class="intent-btn" onclick="openWithChooser()" style="flex:1;padding:12px 10px;border-radius:14px;font-size:0.8rem">
+        <i class="fa-solid fa-share-from-square"></i> Open With
+      </button>
+      <button class="intent-btn leone" onclick="openInLeone()" style="flex:1;padding:12px 10px;border-radius:14px;font-size:0.8rem">
+        <i class="fa-solid fa-play"></i> NS Player
+      </button>
+    </div>
+    
+    <!-- Bottom Actions Row -->
+    <div style="padding:0 16px 20px;display:flex;gap:8px">
+      <a id="downloadLink" href="#" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:var(--bg-elevated);border:1px solid var(--success);color:var(--success);border-radius:14px;text-decoration:none;font-size:0.8rem;font-weight:600;transition:all 0.2s">
+        <i class="fa-solid fa-download"></i> Download
+      </a>
+      <a id="externalLink" href="#" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-secondary);border-radius:14px;text-decoration:none;font-size:0.8rem;font-weight:600;transition:all 0.2s">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Pixeldrain
+      </a>
+    </div>
+    
+  </div>
+</div>
+
+<!-- CONTEXT MENU -->
+<div class="ctx-menu" id="ctxMenu">
+  <div class="ctx-item" onclick="ctxPlay()"><i class="fa-solid fa-play" style="color:var(--accent)"></i> Play</div>
+  <div class="ctx-item" onclick="ctxPin()"><i class="fa-solid fa-thumbtack" style="color:var(--warning)"></i> <span id="ctxPinLabel">Pin</span></div>
+  <div class="ctx-item" onclick="ctxTestLink()"><i class="fa-solid fa-vial" style="color:var(--accent-light)"></i> Test Link</div>
+  <div class="ctx-item" onclick="ctxShare()"><i class="fa-solid fa-share-nodes" style="color:var(--success)"></i> Share Link</div>
+  <div class="ctx-item" onclick="ctxCopyId()"><i class="fa-solid fa-copy"></i> Copy File ID</div>
+  <div class="ctx-item" onclick="ctxOpenPixeldrain()"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open on Pixeldrain</div>
+  <div class="ctx-divider"></div>
+  <div class="ctx-item" onclick="ctxAddToAlbum()"><i class="fa-solid fa-layer-group"></i> Add to Album</div>
+  <div class="ctx-item" onclick="ctxMoveToFolder()"><i class="fa-solid fa-folder-arrow-down"></i> Move to Folder</div>
+  <div class="ctx-divider"></div>
+  <div class="ctx-item danger" onclick="ctxDelete()"><i class="fa-solid fa-trash"></i> Remove</div>
+</div>
+
+<!-- Saved Link Context Menu -->
+<div class="ctx-menu" id="savedLinkCtxMenu">
+  <div class="ctx-item" onclick="slCtxOpen()"><i class="fa-solid fa-arrow-up-right-from-square" style="color:var(--accent)"></i> Open Link</div>
+  <div class="ctx-item" onclick="slCtxCopy()"><i class="fa-solid fa-copy" style="color:var(--success)"></i> Copy URL</div>
+  <div class="ctx-divider"></div>
+  <div class="ctx-item danger" onclick="slCtxDelete()"><i class="fa-solid fa-trash"></i> Delete</div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const API_KEY = 'e4d5c8ad-63b0-44f0-928b-bbd43c8ac950';
+const API_BASE = 'https://pixeldrain.com/api';
+
+let state = {
+  videos: [],
+  albums: [],
+  folders: [],
+  recent: [],
+  sources: [], // { url, title, type, syncedAt, fileCount }
+  savedLinks: [], // { id, name, url, badge, thumbnail, details, folderId, added }
+  settings: { apiKey: API_KEY, autoplay: true, theme: 'dark' },
+  currentView: 'grid',
+  currentFolder: null,
+};
+
+let currentVideoId = null;
+let ctxVideoId = null;
+let searchTimeout = null;
+let previousTab = 'home';
+let currentTab = 'home';
+let fabOpen = false;
+
+// ============================================================
+// PERSISTENCE
+// ============================================================
+function saveState() {
+  localStorage.setItem('pixedrain_state', JSON.stringify(state));
+}
+function loadState() {
+  const saved = localStorage.getItem('pixedrain_state');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+    } catch(e) {}
+  }
+  if (!Array.isArray(state.videos))     state.videos     = [];
+  if (!Array.isArray(state.albums))     state.albums     = [];
+  if (!Array.isArray(state.folders))    state.folders    = [];
+  if (!Array.isArray(state.recent))     state.recent     = [];
+  if (!Array.isArray(state.nonVideos))  state.nonVideos  = [];
+  if (!Array.isArray(state.sources))    state.sources    = [];
+  if (!Array.isArray(state.savedLinks)) state.savedLinks = [];
+  if (!state.settings.theme) state.settings.theme = 'dark';
+}
+
+// ============================================================
+// THEME SYSTEM
+// ============================================================
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  state.settings.theme = theme;
+  saveState();
+  
+  // Update theme selector UI
+  document.querySelectorAll('#themeSelector .theme-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.theme === theme);
+  });
+  
+  // Update meta theme color
+  const colors = {
+    dark: '#0a0a0f',
+    light: '#f8fafc',
+    midnight: '#020617',
+    amoled: '#000000',
+    sunset: '#1a1423'
+  };
+  document.querySelector('meta[name="theme-color"]').content = colors[theme] || colors.dark;
+  
+  showToast(`🎨 Theme changed to ${theme}`, 'success');
+}
+
+function applyTheme() {
+  const theme = state.settings.theme || 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('#themeSelector .theme-option').forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.theme === theme);
+  });
+}
+
+// ============================================================
+// LOADING OVERLAY
+// ============================================================
+function showLoading(text = 'Loading...') {
+  document.getElementById('loadingText').textContent = text;
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('show');
+}
+
+// ============================================================
+// SKELETON LOADING
+// ============================================================
+function renderSkeletonCards(container, count = 6) {
+  container.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const card = document.createElement('div');
+    card.className = 'skeleton-card';
+    card.innerHTML = `
+      <div class="skeleton-thumb"></div>
+      <div class="skeleton-line" style="margin-top:12px"></div>
+      <div class="skeleton-line short"></div>
+    `;
+    container.appendChild(card);
+  }
+}
+
+// ============================================================
+// SIDEBAR / NAVIGATION
+// ============================================================
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+}
+function switchTab(tab) {
+  if (currentTab === tab && tab !== 'home') return;
+  previousTab = currentTab;
+  currentTab = tab;
+  document.querySelectorAll('[id^="tab-"]').forEach(el => el.style.display = 'none');
+  const tabEl = document.getElementById('tab-' + tab);
+  if (tabEl) { tabEl.style.display = ''; tabEl.classList.add('fade-in'); }
+  document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  const tabBtn = document.getElementById('tabBtn-' + tab);
+  if (tabBtn) tabBtn.classList.add('active');
+  renderTab(tab);
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderTab(tab) {
+  if (tab === 'home') renderHome();
+  else if (tab === 'videos') renderAllVideos();
+  else if (tab === 'albums') renderAlbums();
+  else if (tab === 'folders') renderFolders();
+  else if (tab === 'continue') renderContinue();
+  else if (tab === 'pinned') renderPinned();
+  else if (tab === 'sources') renderSources();
+  else if (tab === 'tester') renderTester();
+  updateStats();
+}
+
+function updateStats() {
+  document.getElementById('totalFilesCount').textContent = state.videos.length;
+}
+
+function extractId(url) {
+  if (!url) return null;
+  let m = url.match(/\/api\/file\/([a-zA-Z0-9_-]+)/);
+  if (m) return m[1];
+  m = url.match(/pixeldrain\.com\/u\/([a-zA-Z0-9_-]+)/);
+  if (m) return m[1];
+  m = url.match(/pixeldrain\.com\/l\/([a-zA-Z0-9_-]+)/);
+  if (m) return { type: 'list', id: m[1] };
+  if (/^[a-zA-Z0-9_-]{5,12}$/.test(url.trim())) return url.trim();
+  return null;
+}
+
+function classifyFile(name, mimeType) {
+  const mime = (mimeType || '').toLowerCase();
+  const ext  = (name || '').split('.').pop().toLowerCase();
+  const videoExts  = ['mp4','mkv','avi','mov','wmv','flv','webm','m4v','mpg','mpeg','3gp','ts','m2ts','vob','ogv','rm','rmvb','divx','xvid'];
+  const imageExts  = ['jpg','jpeg','png','gif','webp','bmp','svg','tiff','avif','heic','heif','ico','raw'];
+  const archiveExts= ['zip','rar','7z','gz','tar','bz2','xz','iso','cab','deb','rpm','pkg','dmg'];
+  if (mime.startsWith('video/') || videoExts.includes(ext))  return 'video';
+  if (mime.startsWith('image/') || imageExts.includes(ext))  return 'image';
+  if (['application/zip','application/x-zip','application/x-rar',
+       'application/x-7z-compressed','application/x-7z','application/gzip',
+       'application/x-tar','application/x-bzip2','application/x-bzip',
+       'application/vnd.rar'].some(m => mime === m || mime.startsWith(m))
+      || archiveExts.includes(ext))                          return 'archive';
+  return 'other';
+}
+
+function getThumbUrl(id) {
+  return `https://pixeldrain.com/api/file/${id}/thumbnail`;
+}
+function getStreamUrl(id) {
+  return `https://pixeldrain.com/api/file/${id}`;
+}
+function getFilePageUrl(id) {
+  return `https://pixeldrain.com/u/${id}`;
+}
+
+function createVideoCard(video, extraClass = '') {
+  const isPinned = video.pinned;
+  const card = document.createElement('div');
+  card.className = 'video-card ' + extraClass;
+  card.innerHTML = `
+    <div class="thumbnail-wrap">
+      <img src="${getThumbUrl(video.id)}" loading="lazy" alt="${video.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 9%22><rect fill=%22%230d0d1a%22 width=%2216%22 height=%229%22/><text x=%228%22 y=%225%22 text-anchor=%22middle%22 fill=%22%23475569%22 font-size=%222%22>▶</text></svg>'"/>
+      <div class="play-overlay"><div class="play-btn-big"><i class="fa-solid fa-play ml-1"></i></div></div>
+      ${isPinned ? '<span class="pin-badge">📌</span>' : ''}
+    </div>
+    <div class="card-info">
+      <div class="card-title">${video.name}</div>
+      <div class="card-meta"><i class="fa-solid fa-eye text-xs"></i>${video.views||0} views <span>·</span> ${formatDate(video.added)}</div>
+    </div>
+  `;
+  card.addEventListener('click', () => playVideo(video.id));
+  card.addEventListener('contextmenu', (e) => { e.preventDefault(); showCtxMenu(e, video.id); });
+  card.addEventListener('touchstart', longPressHandler(video.id), { passive: true });
+  return card;
+}
+
+let longPressTimer = null;
+function longPressHandler(id) {
+  return (e) => {
+    longPressTimer = setTimeout(() => {
+      showCtxMenu({ clientX: e.touches[0].clientX, clientY: e.touches[0].clientY }, id);
+    }, 600);
+  };
+}
+document.addEventListener('touchend', () => clearTimeout(longPressTimer));
+
+function renderHome() {
+  const pinnedVids = state.videos.filter(v => v.pinned);
+  const grid = document.getElementById('videoGrid');
+  const pinnedSection = document.getElementById('pinnedSection');
+  if (pinnedVids.length > 0) {
+    pinnedSection.style.display = '';
+    const strip = document.getElementById('pinnedStrip');
+    strip.innerHTML = '';
+    pinnedVids.forEach(v => {
+      const item = document.createElement('div');
+      item.className = 'recent-item';
+      item.innerHTML = `<div class="recent-thumb"><img src="${getThumbUrl(v.id)}" loading="lazy" style="width:100%;height:100%;object-fit:cover"/></div><div class="recent-title">${v.name}</div>`;
+      item.onclick = () => playVideo(v.id);
+      strip.appendChild(item);
+    });
+  } else pinnedSection.style.display = 'none';
+  renderVideoGrid(grid, state.videos);
+}
+
+let currentFilter = 'all';
+function filterVideos(filter, el) {
+  currentFilter = filter;
+  document.querySelectorAll('#filterChips .tag').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  let videos = state.videos;
+  if (filter === 'pinned') videos = state.videos.filter(v => v.pinned);
+  else if (filter === 'recent') videos = state.recent.slice(0,20).map(id => state.videos.find(v => v.id === id)).filter(Boolean);
+  renderVideoGrid(document.getElementById('videoGrid'), videos);
+}
+
+function renderAllVideos() {
+  const grid = document.getElementById('allVideosGrid');
+  renderVideoGrid(grid, state.videos);
+  document.getElementById('emptyVideos').style.display = state.videos.length === 0 ? '' : 'none';
+}
+
+function renderVideoGrid(grid, videos, extraClass = '') {
+  grid.innerHTML = '';
+  if (state.currentView === 'list') grid.classList.add('list-view');
+  else grid.classList.remove('list-view');
+  const empty = document.getElementById('emptyHome');
+  if (videos.length === 0) {
+    if (empty) empty.style.display = '';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  videos.forEach(v => {
+    if (!v) return;
+    grid.appendChild(createVideoCard(v, extraClass));
+  });
+}
+
+function renderAlbums() {
+  const grid = document.getElementById('albumsGrid');
+  const empty = document.getElementById('emptyAlbums');
+  const detail = document.getElementById('albumDetail');
+  grid.innerHTML = '';
+  detail.style.display = 'none';
+  grid.style.display = '';
+  if (state.albums.length === 0) { empty.style.display = ''; return; }
+  empty.style.display = 'none';
+  state.albums.forEach(album => {
+    const thumbs = (album.videoIds || []).slice(0, 4).map(id => {
+      const v = state.videos.find(x => x.id === id);
+      return v ? `<img src="${getThumbUrl(v.id)}" style="width:100%;height:100%;object-fit:cover" loading="lazy"/>` : '<div style="background:#0d0d1a"></div>';
+    });
+    while (thumbs.length < 4) thumbs.push('<div style="background:#0d0d1a"></div>');
+    const card = document.createElement('div');
+    card.className = 'album-card';
+    card.innerHTML = `
+      <div class="album-grid">${thumbs.join('')}</div>
+      <div class="p-3">
+        <div class="font-semibold text-sm">${album.name}</div>
+        <div class="text-xs mt-1" style="color:var(--text-muted)">${(album.videoIds||[]).length} videos ${album.pixeldrainId ? '· <span style="color:var(--accent-light)">☁ Synced</span>' : ''}</div>
+      </div>`;
+    card.onclick = () => openAlbumDetail(album.id);
+    grid.appendChild(card);
+  });
+}
+
+function openAlbumDetail(albumId) {
+  const album = state.albums.find(a => a.id === albumId);
+  if (!album) return;
+  document.getElementById('albumsGrid').style.display = 'none';
+  document.getElementById('albumDetail').style.display = '';
+  document.getElementById('albumDetailTitle').textContent = album.name;
+  const grid = document.getElementById('albumDetailGrid');
+  const videos = (album.videoIds || []).map(id => state.videos.find(v => v.id === id)).filter(Boolean);
+  renderVideoGrid(grid, videos);
+}
+
+function closeAlbumDetail() {
+  document.getElementById('albumsGrid').style.display = '';
+  document.getElementById('albumDetail').style.display = 'none';
+}
+
+function renderFolders() {
+  const fGrid = document.getElementById('foldersGrid');
+  const vGrid = document.getElementById('folderVideosGrid');
+  const empty = document.getElementById('emptyFolders');
+  fGrid.innerHTML = ''; vGrid.innerHTML = '';
+  const folders    = state.folders.filter(f => f.parentId === state.currentFolder);
+  const videos     = state.videos.filter(v => v.folderId === state.currentFolder);
+  const nonVideos  = (state.nonVideos || []).filter(n => n.folderId === state.currentFolder);
+  const savedLinks = (state.savedLinks || []).filter(l => l.folderId === state.currentFolder);
+  const totalItems = folders.length + videos.length + nonVideos.length + savedLinks.length;
+  empty.style.display = totalItems === 0 ? '' : 'none';
+  
+  // Render subfolders
+  folders.forEach(folder => {
+    const card = document.createElement('div');
+    card.className = 'folder-card';
+    const subFolders = state.folders.filter(f => f.parentId === folder.id).length;
+    const subVideos  = state.videos.filter(v => v.folderId === folder.id).length;
+    const subNV      = (state.nonVideos || []).filter(n => n.folderId === folder.id).length;
+    const subLinks   = (state.savedLinks || []).filter(l => l.folderId === folder.id).length;
+    const count      = subFolders + subVideos + subNV + subLinks;
+    let folderIcon = 'fa-folder';
+    let folderColor = 'var(--warning)';
+    if (folder.name.endsWith('– Photos'))   { folderIcon = 'fa-images';      folderColor = '#ec4899'; }
+    if (folder.name.endsWith('– Archives')) { folderIcon = 'fa-file-zipper'; folderColor = '#f59e0b'; }
+    if (folder.name.endsWith('– Files'))    { folderIcon = 'fa-file';        folderColor = '#64748b'; }
+    card.innerHTML = `
+      <i class="fa-solid ${folderIcon}" style="font-size:1.8rem;color:${folderColor}"></i>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm truncate">${escHtml(folder.name)}</div>
+        <div class="text-xs mt-1" style="color:var(--text-muted)">${count} item${count!==1?'s':''}</div>
+      </div>`;
+    card.onclick = () => navigateFolder(folder.id);
+    fGrid.appendChild(card);
+  });
+  
+  // Render videos
+  renderVideoGrid(vGrid, videos);
+  
+  // Render saved external links
+  const linksContainer = document.getElementById('folderSavedLinks');
+  if (linksContainer) linksContainer.innerHTML = '';
+  if (savedLinks.length > 0 && linksContainer) {
+    const linksSection = document.createElement('div');
+    linksSection.className = 'mt-4';
+    linksSection.innerHTML = `<div class="section-title mb-3" style="font-size:0.85rem"><i class="fa-solid fa-bookmark"></i> Saved Links (${savedLinks.length})</div>`;
+    const linksGrid = document.createElement('div');
+    linksGrid.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:10px';
+    savedLinks.forEach(link => {
+      const card = document.createElement('div');
+      card.className = 'saved-link-card';
+      const badgeClass = `badge-${link.badge || 'custom'}`;
+      const badgeText = link.badgeCustom || link.badge || 'Link';
+      const thumbHtml = link.thumbnail 
+        ? `<img src="${escHtml(link.thumbnail)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="fallback-icon" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center"><i class="fa-solid fa-link"></i></div>`
+        : `<div class="fallback-icon"><i class="fa-solid fa-link"></i></div>`;
+      card.innerHTML = `
+        <div class="saved-link-thumb">
+          ${thumbHtml}
+          <div style="position:absolute;top:6px;left:6px">
+            <span class="service-badge ${badgeClass}">${escHtml(badgeText)}</span>
+          </div>
+        </div>
+        <div style="padding:10px 12px">
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text-primary);margin-bottom:4px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${escHtml(link.name)}</div>
+          ${link.details ? `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${escHtml(link.details)}</div>` : ''}
+          <div style="font-size:0.65rem;color:var(--text-muted)">${formatDate(link.added)}</div>
+        </div>`;
+      card.onclick = () => openSavedLinkDetail(link.id);
+      card.oncontextmenu = (e) => { e.preventDefault(); showSavedLinkMenu(e, link.id); };
+      linksGrid.appendChild(card);
+    });
+    linksSection.appendChild(linksGrid);
+    linksContainer.appendChild(linksSection);
+  }
+  
+  // Render non-video files
+  const nvContainer = document.getElementById('folderNonVideos');
+  nvContainer.innerHTML = '';
+  if (nonVideos.length > 0) {
+    const nvSection = document.createElement('div');
+    nvSection.className = 'mt-4';
+    nvSection.innerHTML = `<div class="section-title mb-3" style="font-size:0.85rem"><i class="fa-solid fa-file"></i> Other Files (${nonVideos.length})</div>`;
+    const nvGrid = document.createElement('div');
+    nvGrid.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:10px';
+    nonVideos.forEach(nv => {
+      const type  = classifyFile(nv.name, nv.mimeType);
+      const icon  = type === 'image'   ? 'fa-image'       :
+                    type === 'archive' ? 'fa-file-zipper' : 'fa-file';
+      const color = type === 'image'   ? '#ec4899'        :
+                    type === 'archive' ? '#f59e0b'        : '#64748b';
+      const card  = document.createElement('div');
+      card.style.cssText = 'background:var(--bg-card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.2s';
+      card.onmouseover = () => { card.style.borderColor = 'var(--accent)'; };
+      card.onmouseout  = () => { card.style.borderColor = 'var(--border)'; };
+      const thumbHtml = type === 'image'
+        ? `<img src="${getThumbUrl(nv.id)}" style="width:100%;height:80px;object-fit:cover" loading="lazy"/>`
+        : `<div style="height:80px;display:flex;align-items:center;justify-content:center;background:var(--bg-elevated)"><i class="fa-solid ${icon}" style="font-size:2rem;color:${color}"></i></div>`;
+      card.innerHTML = `
+        ${thumbHtml}
+        <div style="padding:8px 10px">
+          <div style="font-size:0.78rem;font-weight:600;color:var(--text-primary);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${escHtml(nv.name)}</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-top:3px">${formatBytes(nv.size)}</div>
+        </div>`;
+      card.onclick = () => window.open(getFilePageUrl(nv.id), '_blank');
+      nvGrid.appendChild(card);
+    });
+    nvSection.appendChild(nvGrid);
+    nvContainer.appendChild(nvSection);
+  }
+}
+
+function navigateFolder(folderId) {
+  state.currentFolder = folderId;
+  const bc = document.getElementById('breadcrumb');
+  const backBtn = document.getElementById('folderBackBtn');
+  const titleEl = document.getElementById('folderTitle');
+  
+  bc.innerHTML = `<span class="breadcrumb-item" onclick="navigateFolder(null)"><i class="fa-solid fa-house text-xs mr-1"></i>Root</span>`;
+  
+  if (folderId) {
+    const folder = state.folders.find(f => f.id === folderId);
+    titleEl.textContent = folder ? folder.name : 'Folders';
+    backBtn.style.display = '';
+    
+    const buildPath = (id) => {
+      const f = state.folders.find(f => f.id === id);
+      if (!f) return [];
+      if (f.parentId) return [...buildPath(f.parentId), f];
+      return [f];
+    };
+    const path = buildPath(folderId);
+    path.forEach(f => {
+      bc.innerHTML += `<span class="breadcrumb-sep">/</span><span class="breadcrumb-item" onclick="navigateFolder('${f.id}')">${f.name}</span>`;
+    });
+  } else {
+    titleEl.textContent = 'Folders';
+    backBtn.style.display = 'none';
+  }
+  renderFolders();
+}
+
+function goBackFolder() {
+  if (!state.currentFolder) return;
+  const currentFolder = state.folders.find(f => f.id === state.currentFolder);
+  if (currentFolder && currentFolder.parentId) {
+    navigateFolder(currentFolder.parentId);
+  } else {
+    navigateFolder(null);
+  }
+}
+
+function renderContinue() {
+  const grid = document.getElementById('continueGrid');
+  const empty = document.getElementById('emptyContinue');
+  const videos = state.recent.map(id => state.videos.find(v => v.id === id)).filter(Boolean);
+  renderVideoGrid(grid, videos);
+  empty.style.display = videos.length === 0 ? '' : 'none';
+}
+
+function renderPinned() {
+  const grid = document.getElementById('pinnedGrid');
+  const empty = document.getElementById('emptyPinned');
+  const videos = state.videos.filter(v => v.pinned);
+  renderVideoGrid(grid, videos);
+  empty.style.display = videos.length === 0 ? '' : 'none';
+}
+
+function renderSources() {
+  const list = document.getElementById('sourcesList');
+  const empty = document.getElementById('emptySources');
+  list.innerHTML = '';
+  
+  if (state.sources.length === 0) {
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+  
+  // Sort by most recent first
+  const sorted = [...state.sources].sort((a, b) => b.syncedAt - a.syncedAt);
+  
+  sorted.forEach(source => {
+    const card = document.createElement('div');
+    card.style.cssText = 'background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px';
+    
+    const typeIcon = source.type === 'list' ? 'fa-folder-open' : 'fa-file-video';
+    const typeColor = source.type === 'list' ? 'var(--warning)' : 'var(--accent-light)';
+    const syncDate = new Date(source.syncedAt);
+    const dateStr = syncDate.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    const timeStr = syncDate.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    
+    const urlEncoded = encodeURIComponent(source.url);
+    card.innerHTML = `
+      <div style="display:flex;align-items:flex-start;gap:12px">
+        <div style="width:40px;height:40px;border-radius:10px;background:var(--bg-elevated);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="fa-solid ${typeIcon}" style="color:${typeColor}"></i>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:0.9rem;font-weight:600;color:var(--text-primary);margin-bottom:4px">${escHtml(source.title || 'Untitled')}</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:6px;word-break:break-all">${escHtml(source.url)}</div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <span style="font-size:0.7rem;color:var(--text-secondary)"><i class="fa-solid fa-calendar-check mr-1"></i>${dateStr} ${timeStr}</span>
+            ${source.fileCount ? `<span style="font-size:0.7rem;color:var(--accent-light)"><i class="fa-solid fa-film mr-1"></i>${source.fileCount} files</span>` : ''}
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn-ghost" onclick="copySourceLink(decodeURIComponent('${urlEncoded}'))" style="flex:1;padding:8px;font-size:0.75rem">
+          <i class="fa-solid fa-copy mr-1"></i> Copy
+        </button>
+        <button class="btn-primary" onclick="resyncSource(decodeURIComponent('${urlEncoded}'))" style="flex:1;padding:8px;font-size:0.75rem">
+          <i class="fa-solid fa-rotate mr-1"></i> Sync New
+        </button>
+        <button class="btn-ghost" onclick="deleteSource(decodeURIComponent('${urlEncoded}'))" style="padding:8px;font-size:0.75rem;color:var(--danger);border-color:var(--danger)">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function copySourceLink(url) {
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('📋 Link copied!', 'success');
+  }).catch(() => {
+    showToast('Failed to copy', 'error');
+  });
+}
+
+async function resyncSource(url) {
+  const result = extractId(url);
+  if (!result) {
+    showToast('Invalid URL', 'error');
+    return;
+  }
+  
+  showLoading('Re-syncing...');
+  
+  try {
+    if (typeof result === 'object' && result.type === 'list') {
+      // Re-sync album/list - only add new items
+      const res = await fetch(`${API_BASE}/list/${result.id}`);
+      const data = await res.json();
+      
+      if (!data.files || !data.success) {
+        hideLoading();
+        showToast('Failed to fetch album', 'error');
+        return;
+      }
+      
+      let newCount = 0;
+      const albumTitle = data.title || 'Imported Album';
+      
+      data.files.forEach(f => {
+        const type = classifyFile(f.name, f.mime_type);
+        if (type === 'video') {
+          // Only add if not exists
+          if (!state.videos.find(v => v.id === f.id)) {
+            state.videos.push({
+              id: f.id,
+              name: f.name || f.id,
+              mimeType: f.mime_type || 'video/mp4',
+              size: f.size || 0,
+              views: f.views || 0,
+              added: Date.now(),
+              pinned: false,
+              folderId: null,
+            });
+            newCount++;
+          }
+        }
+      });
+      
+      // Update source sync date
+      const source = state.sources.find(s => s.url === url);
+      if (source) {
+        source.syncedAt = Date.now();
+        source.fileCount = data.files.length;
+      }
+      
+      saveState();
+      hideLoading();
+      showToast(`✅ Synced! ${newCount} new videos added`, 'success');
+      renderSources();
+      updateStats();
+    } else {
+      // Single file - check if exists
+      const id = result;
+      if (state.videos.find(v => v.id === id)) {
+        hideLoading();
+        showToast('Video already in library', '');
+        return;
+      }
+      
+      const res = await fetch(`${API_BASE}/file/${id}/info`);
+      const data = await res.json();
+      
+      state.videos.push({
+        id,
+        name: data.name || id,
+        mimeType: data.mime_type || '',
+        size: data.size || 0,
+        views: data.views || 0,
+        added: Date.now(),
+        pinned: false,
+        folderId: null,
+      });
+      
+      const source = state.sources.find(s => s.url === url);
+      if (source) source.syncedAt = Date.now();
+      
+      saveState();
+      hideLoading();
+      showToast('✅ Video re-synced!', 'success');
+      updateStats();
+    }
+  } catch(e) {
+    hideLoading();
+    showToast('Re-sync failed: ' + e.message, 'error');
+  }
+}
+
+function deleteSource(url) {
+  if (!confirm('Remove this source link from history?')) return;
+  state.sources = state.sources.filter(s => s.url !== url);
+  saveState();
+  renderSources();
+  showToast('Source removed', 'success');
+}
+
+function addSourceLink(url, title, type, fileCount) {
+  // Remove existing if same URL
+  state.sources = state.sources.filter(s => s.url !== url);
+  state.sources.push({
+    url,
+    title: title || 'Untitled',
+    type: type || 'file',
+    fileCount: fileCount || 0,
+    syncedAt: Date.now()
+  });
+  saveState();
+}
+
+function setView(view) {
+  state.currentView = view;
+  document.getElementById('gridViewBtn').classList.toggle('active', view === 'grid');
+  document.getElementById('listViewBtn').classList.toggle('active', view === 'list');
+  renderHome();
+}
+
+// ============================================================
+// VIDEO PLAYER
+// ============================================================
+function playVideo(id) {
+  const video = state.videos.find(v => v.id === id);
+  if (!video) return;
+  currentVideoId = id;
+  state.recent = [id, ...state.recent.filter(r => r !== id)].slice(0, 50);
+  saveState();
+
+  const streamUrl = `${API_BASE}/file/${id}`;
+
+  // Populate modal
+  document.getElementById('playerTitle').textContent = video.name;
+  document.getElementById('playerThumb').src = getThumbUrl(id);
+  document.getElementById('externalLink').href = getFilePageUrl(id);
+  document.getElementById('downloadLink').href = `${streamUrl}?download`;
+  document.getElementById('streamLinkInput').value = streamUrl;
+  document.getElementById('playerFileId').textContent = id;
+  
+  // Folder info
+  const folder = video.folderId ? state.folders.find(f => f.id === video.folderId) : null;
+  document.getElementById('playerFolderName').textContent = folder ? folder.name : 'Root';
+
+  // File info
+  document.getElementById('playerSize').textContent = video.size ? formatBytes(video.size) : '—';
+  document.getElementById('playerType').textContent = formatMime(video.mimeType);
+  document.getElementById('playerViews').textContent = video.views ? formatCount(video.views) : '0';
+  document.getElementById('playerDate').textContent = video.added ? formatDate(video.added) : '—';
+  
+  // Status - default to checking
+  const statusEl = document.getElementById('playerStatus');
+  statusEl.innerHTML = '<span class="loading-spinner" style="width:10px;height:10px;border-width:2px"></span> CHECKING';
+  statusEl.style.background = 'rgba(100,100,100,0.3)';
+  statusEl.style.color = '#ccc';
+
+  updatePlayerPinBtn(video.pinned);
+  openModal('playerModal');
+
+  // Fetch fresh info from API
+  fetch(`${API_BASE}/file/${id}/info`).then(r => {
+    if (!r.ok) throw new Error('not found');
+    return r.json();
+  }).then(data => {
+    if (data.size) { video.size = data.size; document.getElementById('playerSize').textContent = formatBytes(data.size); }
+    if (data.mime_type) { video.mimeType = data.mime_type; document.getElementById('playerType').textContent = formatMime(data.mime_type); }
+    if (data.views != null) { video.views = data.views; document.getElementById('playerViews').textContent = formatCount(data.views); }
+    // Show live status
+    statusEl.innerHTML = '<span class="status-dot online"></span> LIVE';
+    statusEl.style.background = 'rgba(16,185,129,0.25)';
+    statusEl.style.color = '#6ee7b7';
+    saveState();
+  }).catch(() => {
+    statusEl.innerHTML = '<span class="status-dot offline"></span> DEAD';
+    statusEl.style.background = 'rgba(239,68,68,0.25)';
+    statusEl.style.color = '#fca5a5';
+  });
+}
+
+function formatMime(mime) {
+  if (!mime) return '—';
+  const short = {
+    'video/mp4': 'MP4',
+    'video/x-matroska': 'MKV',
+    'video/webm': 'WebM',
+    'video/x-msvideo': 'AVI',
+    'video/quicktime': 'MOV',
+    'video/x-flv': 'FLV',
+    'video/mpeg': 'MPEG',
+    'video/3gpp': '3GP',
+  };
+  return short[mime] || mime.replace('video/','').toUpperCase();
+}
+
+function formatCount(n) {
+  if (!n) return '0';
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+  return String(n);
+}
+
+function closePlayer() {
+  currentVideoId = null;
+  const sheet = document.getElementById('playerSheet');
+  if (sheet) {
+    sheet.style.animation = 'sheetDown 0.25s ease forwards';
+    setTimeout(() => {
+      closeModal('playerModal');
+      sheet.style.animation = 'sheetUp 0.35s cubic-bezier(0.16,1,0.3,1)';
+    }, 250);
+  } else {
+    closeModal('playerModal');
+  }
+}
+
+function copyStreamLink() {
+  const input = document.getElementById('streamLinkInput');
+  const url = input.value;
+  if (!url) return;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('📋 Stream link copied!', 'success');
+  }).catch(() => {
+    input.select();
+    document.execCommand('copy');
+    showToast('📋 Stream link copied!', 'success');
+  });
+}
+
+function updatePlayerPinBtn(pinned) {
+  const btn = document.getElementById('playerPinBtn');
+  btn.style.color = pinned ? 'var(--warning)' : '';
+  btn.title = pinned ? 'Unpin' : 'Pin';
+}
+
+function pinCurrentVideo() {
+  if (!currentVideoId) return;
+  const v = state.videos.find(v => v.id === currentVideoId);
+  if (!v) return;
+  v.pinned = !v.pinned;
+  updatePlayerPinBtn(v.pinned);
+  saveState();
+  showToast(v.pinned ? '📌 Pinned!' : 'Unpinned', 'success');
+  updateStats();
+}
+
+function shareCurrentVideo() {
+  if (!currentVideoId) return;
+  const url = getFilePageUrl(currentVideoId);
+  if (navigator.share) {
+    navigator.share({ title: 'Video', url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(url).then(() => showToast('Link copied!', 'success'));
+  }
+}
+
+// ============================================================
+// INTENT HANDLERS - Only 2 buttons
+// ============================================================
+
+// Opens Android chooser to select any video player app
+function openWithChooser() {
+  if (!currentVideoId) return;
+  const streamUrl = `${API_BASE}/file/${currentVideoId}`;
+  const video = state.videos.find(v => v.id === currentVideoId);
+  const title = video ? video.name : 'Video';
+  
+  // Android intent with chooser action
+  const intentUrl = `intent:${streamUrl}#Intent;action=android.intent.action.VIEW;type=video/*;S.title=${encodeURIComponent(title)};end`;
+  
+  window.location.href = intentUrl;
+  showToast('Opening video player chooser...', 'success');
+}
+
+// Opens directly in NS Player (Leone)
+function openInLeone() {
+  if (!currentVideoId) return;
+  const streamUrl = `${API_BASE}/file/${currentVideoId}`;
+  const video = state.videos.find(v => v.id === currentVideoId);
+  const title = video ? video.name : 'Video';
+  
+  // Direct intent to Leone package
+  const intentUrl = `intent:${streamUrl}#Intent;package=com.genuine.leone;type=video/*;S.title=${encodeURIComponent(title)};end`;
+  
+  window.location.href = intentUrl;
+  showToast('Opening in NS Player...', 'success');
+}
+
+// ============================================================
+// ADD VIDEO
+// ============================================================
+function openAddVideoModal() {
+  populateAlbumSelect('videoAlbumSelect');
+  populateFolderSelect('videoFolderSelect');
+  document.getElementById('videoUrlInput').value = '';
+  document.getElementById('videoNameInput').value = '';
+  document.getElementById('urlPreview').style.display = 'none';
+  openModal('addVideoModal');
+}
+
+async function previewVideoUrl() {
+  const url = document.getElementById('videoUrlInput').value.trim();
+  const result = extractId(url);
+  const previewDiv = document.getElementById('urlPreview');
+  const thumbEl    = document.getElementById('urlPreviewThumb');
+  const titleEl    = document.getElementById('urlPreviewTitle');
+  const idEl       = document.getElementById('urlPreviewId');
+  if (!result) { previewDiv.style.display = 'none'; return; }
+  if (typeof result === 'object' && result.type === 'list') {
+    previewDiv.style.display = '';
+    thumbEl.style.display = 'none';
+    titleEl.textContent = 'Loading album…';
+    idEl.textContent = 'List ID: ' + result.id;
+    try {
+      const res  = await fetch(`${API_BASE}/list/${result.id}`);
+      const data = await res.json();
+      const title = data.title || 'Pixeldrain Album';
+      titleEl.textContent = `📁 ${title} (${data.file_count || 0} files)`;
+      idEl.textContent = 'List ID: ' + result.id;
+      const firstVideo = (data.files || []).find(f => classifyFile(f.name, f.mime_type) === 'video');
+      if (firstVideo) {
+        thumbEl.style.display = '';
+        thumbEl.src = getThumbUrl(firstVideo.id);
+      }
+      if (!document.getElementById('videoNameInput').value) {
+        document.getElementById('videoNameInput').value = title;
+      }
+    } catch(e) {
+      titleEl.textContent = 'Could not fetch album info';
+    }
+    return;
+  }
+  const id = result;
+  previewDiv.style.display = '';
+  thumbEl.style.display = '';
+  thumbEl.src = getThumbUrl(id);
+  idEl.textContent = 'ID: ' + id;
+  titleEl.textContent = 'Loading…';
+  try {
+    const res  = await fetch(`${API_BASE}/file/${id}/info`);
+    const data = await res.json();
+    if (data.name) {
+      titleEl.textContent = data.name;
+      if (!document.getElementById('videoNameInput').value) {
+        document.getElementById('videoNameInput').value = data.name;
+      }
+    }
+  } catch(e) { titleEl.textContent = id; }
+}
+
+async function addVideo() {
+  const url      = document.getElementById('videoUrlInput').value.trim();
+  const name     = document.getElementById('videoNameInput').value.trim();
+  const albumId  = document.getElementById('videoAlbumSelect').value;
+  const folderId = document.getElementById('videoFolderSelect').value;
+  const result   = extractId(url);
+  if (!result) { showToast('Invalid Pixeldrain URL', 'error'); return; }
+  if (typeof result === 'object' && result.type === 'list') {
+    showToast('Importing album…', '');
+    const r = await importList(result.id);
+    closeModal('addVideoModal');
+    const parts = [];
+    if (r.videoCount)   parts.push(`🎬 ${r.videoCount} videos`);
+    if (r.imageCount)   parts.push(`🖼️ ${r.imageCount} photos`);
+    if (r.archiveCount) parts.push(`🗜️ ${r.archiveCount} archives`);
+    if (r.otherCount)   parts.push(`📄 ${r.otherCount} files`);
+    showToast(`✅ ${r.albumTitle}: ${parts.join(', ')||'Done'}`, 'success');
+    renderTab(currentTab);
+    updateStats();
+    return;
+  }
+  const id = result;
+  if (state.videos.find(v => v.id === id)) { showToast('Already in library', 'error'); return; }
+  let finalName = name;
+  let mimeType  = '';
+  let fileSize  = 0;
+  let views     = 0;
+  try {
+    const res  = await fetch(`${API_BASE}/file/${id}/info`);
+    const data = await res.json();
+    finalName = finalName || data.name || id;
+    mimeType  = data.mime_type || '';
+    fileSize  = data.size || 0;
+    views     = data.views || 0;
+  } catch(e) { finalName = finalName || id; }
+  const video = { id, name: finalName, mimeType, size: fileSize, views, added: Date.now(), pinned: false, folderId: folderId || null };
+  state.videos.unshift(video);
+  if (albumId) {
+    const album = state.albums.find(a => a.id === albumId);
+    if (album && !album.videoIds.includes(id)) album.videoIds.push(id);
+  }
+  
+  // Track source link
+  addSourceLink(`https://pixeldrain.com/u/${id}`, finalName, 'file', 1);
+  
+  saveState();
+  closeModal('addVideoModal');
+  showToast(`✅ "${finalName}" added!`, 'success');
+  renderTab(currentTab);
+  updateStats();
+}
+
+// ============================================================
+// IMPORT
+// ============================================================
+function openQuickImportModal() {
+  document.getElementById('quickImportUrl').value = '';
+  document.getElementById('quickImportFolder').value = '';
+  document.getElementById('quickImportStatus').style.display = 'none';
+  document.getElementById('quickImportBtn').disabled = false;
+  openModal('quickImportModal');
+}
+
+async function quickImport() {
+  const url = document.getElementById('quickImportUrl').value.trim();
+  const customFolder = document.getElementById('quickImportFolder').value.trim();
+  const statusDiv = document.getElementById('quickImportStatus');
+  const btn = document.getElementById('quickImportBtn');
+  
+  const result = extractId(url);
+  if (!result) { showToast('Invalid Pixeldrain URL', 'error'); return; }
+  
+  statusDiv.style.display = '';
+  statusDiv.innerHTML = '<div class="text-sm" style="color:var(--text-muted)"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Importing…</div>';
+  btn.disabled = true;
+  
+  if (typeof result === 'object' && result.type === 'list') {
+    const r = await importList(result.id, customFolder);
+    const parts = [];
+    if (r.videoCount)   parts.push(`🎬 ${r.videoCount} videos`);
+    if (r.imageCount)   parts.push(`🖼️ ${r.imageCount} photos`);
+    if (r.archiveCount) parts.push(`🗜️ ${r.archiveCount} archives`);
+    if (r.otherCount)   parts.push(`📄 ${r.otherCount} files`);
+    statusDiv.innerHTML = `<div class="text-sm" style="color:var(--success)">✅ ${escHtml(r.albumTitle)}: ${parts.join(', ')||'Done'}</div>`;
+    showToast(`✅ Imported "${r.albumTitle}"`, 'success');
+  } else {
+    const id = result;
+    if (state.videos.find(v => v.id === id)) {
+      statusDiv.innerHTML = '<div class="text-sm" style="color:var(--warning)">⚠️ Already in library.</div>';
+      btn.disabled = false;
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/file/${id}/info`);
+      const data = await res.json();
+      const name = data.name || id;
+      let folderId = null;
+      if (customFolder) {
+        folderId = getOrCreateFolder(customFolder);
+      }
+      state.videos.unshift({ id, name, mimeType: data.mime_type||'', size: data.size||0, views: data.views||0, added: Date.now(), pinned: false, folderId });
+      addSourceLink(`https://pixeldrain.com/u/${id}`, name, 'file', 1);
+      saveState();
+      statusDiv.innerHTML = `<div class="text-sm" style="color:var(--success)">✅ "${escHtml(name)}" added!</div>`;
+      showToast(`✅ "${name}" imported!`, 'success');
+    } catch(e) {
+      statusDiv.innerHTML = `<div class="text-sm" style="color:var(--danger)">❌ ${e.message}</div>`;
+    }
+  }
+  btn.disabled = false;
+  renderTab(currentTab);
+  updateStats();
+}
+
+async function importFromLink() {
+  const url    = document.getElementById('importLinkInput').value.trim();
+  const customFolder = document.getElementById('importFolderName').value.trim();
+  const result = extractId(url);
+  const resDiv = document.getElementById('importResult');
+  resDiv.style.display = '';
+  resDiv.innerHTML = '<div class="text-sm" style="color:var(--text-muted)"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Fetching info…</div>';
+  if (!result) {
+    resDiv.innerHTML = '<div class="text-sm" style="color:var(--danger)">❌ Invalid or unrecognised Pixeldrain URL</div>';
+    return;
+  }
+  if (typeof result === 'object' && result.type === 'list') {
+    resDiv.innerHTML = '<div class="text-sm" style="color:var(--text-muted)"><i class="fa-solid fa-spinner fa-spin mr-2"></i>Importing album files…</div>';
+    const r = await importList(result.id, customFolder);
+    const folderLabel = customFolder || r.albumTitle;
+    const parts = [];
+    if (r.videoCount)   parts.push(`🎬 ${r.videoCount} video${r.videoCount>1?'s':''}`);
+    if (r.imageCount)   parts.push(`🖼️ ${r.imageCount} photo${r.imageCount>1?'s':''}`);
+    if (r.archiveCount) parts.push(`🗜️ ${r.archiveCount} archive${r.archiveCount>1?'s':''}`);
+    if (r.otherCount)   parts.push(`📄 ${r.otherCount} other file${r.otherCount>1?'s':''}`);
+    const summary = parts.length ? parts.join(' · ') : 'No new files';
+    resDiv.innerHTML = `
+      <div style="background:var(--bg-elevated);border-radius:12px;border:1px solid var(--border);padding:14px">
+        <div class="font-semibold text-sm mb-2" style="color:var(--accent-light)">📁 ${escHtml(folderLabel)}</div>
+        <div class="text-xs mb-2" style="color:var(--text-secondary)">${summary}</div>
+        ${customFolder && r.videoCount ? `<div class="text-xs" style="color:var(--text-muted)">Videos → folder "<b>${escHtml(customFolder)}</b>"</div>` : ''}
+        ${r.imageCount   ? `<div class="text-xs" style="color:var(--text-muted)">Photos → folder "<b>${escHtml(folderLabel)} – Photos</b>"</div>` : ''}
+        ${r.archiveCount ? `<div class="text-xs" style="color:var(--text-muted)">Archives → folder "<b>${escHtml(folderLabel)} – Archives</b>"</div>` : ''}
+        ${r.otherCount   ? `<div class="text-xs" style="color:var(--text-muted)">Other files → folder "<b>${escHtml(folderLabel)} – Files</b>"</div>` : ''}
+        <div class="text-xs mt-2" style="color:var(--success)">✅ Import complete!</div>
+      </div>`;
+    showToast(`✅ Imported from "${folderLabel}"`, 'success');
+    renderTab(currentTab);
+    updateStats();
+    return;
+  }
+  const id = result;
+  try {
+    const res  = await fetch(`${API_BASE}/file/${id}/info`);
+    const data = await res.json();
+    const name = data.name || id;
+    const mime = data.mime_type || '';
+    if (state.videos.find(v => v.id === id)) {
+      resDiv.innerHTML = '<div class="text-sm" style="color:var(--warning)">⚠️ Already in library.</div>';
+      return;
+    }
+    let folderId = null;
+    if (customFolder) {
+      folderId = getOrCreateFolder(customFolder);
+    }
+    state.videos.unshift({ id, name, mimeType: mime, size: data.size||0, views: data.views||0, added: Date.now(), pinned: false, folderId });
+    addSourceLink(`https://pixeldrain.com/u/${id}`, name, 'file', 1);
+    saveState();
+    resDiv.innerHTML = `
+      <div style="background:var(--bg-elevated);border-radius:12px;overflow:hidden;border:1px solid var(--border)">
+        <img src="${getThumbUrl(id)}" style="width:100%;height:130px;object-fit:cover" onerror="this.style.display='none'"/>
+        <div class="p-3">
+          <div class="text-sm font-semibold">${escHtml(name)}</div>
+          <div class="text-xs mt-1" style="color:var(--text-muted)">${mime || 'Unknown type'} · ${formatBytes(data.size||0)}</div>
+          ${customFolder ? `<div class="text-xs mt-1" style="color:var(--accent-light)">📁 ${escHtml(customFolder)}</div>` : ''}
+          <div class="text-xs mt-2" style="color:var(--success)">✅ Added to library!</div>
+        </div>
+      </div>`;
+    showToast('✅ Imported!', 'success');
+    renderTab(currentTab);
+    updateStats();
+  } catch(e) {
+    resDiv.innerHTML = `<div class="text-sm" style="color:var(--danger)">❌ Error: ${e.message}</div>`;
+  }
+}
+
+// Helper: get or create a root-level folder by name, returns folderId
+function getOrCreateFolder(name) {
+  let folder = state.folders.find(f => f.name === name && f.parentId === null);
+  if (!folder) {
+    folder = { id: genId(), name, parentId: null, added: Date.now() };
+    state.folders.push(folder);
+  }
+  return folder.id;
+}
+
+async function importList(listId, customFolderName) {
+  try {
+    const res  = await fetch(`${API_BASE}/list/${listId}`);
+    const data = await res.json();
+    if (!data.files || !data.success) return { videoCount:0, imageCount:0, archiveCount:0, otherCount:0, albumTitle:'Unknown' };
+    const albumTitle = data.title || 'Imported Album';
+    const folderLabel = customFolderName || albumTitle;
+    const videoFiles   = [];
+    const imageFiles   = [];
+    const archiveFiles = [];
+    const otherFiles   = [];
+    data.files.forEach(f => {
+      const type = classifyFile(f.name, f.mime_type);
+      if      (type === 'video')   videoFiles.push(f);
+      else if (type === 'image')   imageFiles.push(f);
+      else if (type === 'archive') archiveFiles.push(f);
+      else                         otherFiles.push(f);
+    });
+    
+    // If custom folder provided, put videos inside it
+    let videoFolderId = null;
+    if (customFolderName) {
+      videoFolderId = getOrCreateFolder(customFolderName);
+    }
+    
+    const albumVideoIds = [];
+    videoFiles.forEach(f => {
+      if (!state.videos.find(v => v.id === f.id)) {
+        state.videos.push({
+          id:       f.id,
+          name:     f.name || f.id,
+          mimeType: f.mime_type || 'video/mp4',
+          size:     f.size || 0,
+          views:    f.views || 0,
+          added:    Date.now(),
+          pinned:   false,
+          folderId: videoFolderId,
+        });
+      } else if (videoFolderId) {
+        // Update existing video's folder if custom folder given
+        const existing = state.videos.find(v => v.id === f.id);
+        if (existing) existing.folderId = videoFolderId;
+      }
+      albumVideoIds.push(f.id);
+    });
+    if (albumVideoIds.length > 0) {
+      const existing = state.albums.find(a => a.pixeldrainId === listId);
+      if (existing) {
+        albumVideoIds.forEach(id => { if (!existing.videoIds.includes(id)) existing.videoIds.push(id); });
+      } else {
+        state.albums.push({ id: genId(), name: folderLabel, videoIds: albumVideoIds, added: Date.now(), pixeldrainId: listId });
+      }
+    }
+    function pushNonVideoFolder(files, suffix) {
+      if (files.length === 0) return;
+      const folderName = `${folderLabel} – ${suffix}`;
+      let folder = state.folders.find(f => f.name === folderName && f.parentId === null);
+      if (!folder) {
+        folder = { id: genId(), name: folderName, parentId: null, added: Date.now() };
+        state.folders.push(folder);
+      }
+      if (!state.nonVideos) state.nonVideos = [];
+      files.forEach(f => {
+        if (!state.nonVideos.find(n => n.id === f.id)) {
+          state.nonVideos.push({
+            id:       f.id,
+            name:     f.name || f.id,
+            mimeType: f.mime_type || '',
+            size:     f.size || 0,
+            folderId: folder.id,
+            added:    Date.now(),
+          });
+        }
+      });
+    }
+    pushNonVideoFolder(imageFiles,   'Photos');
+    pushNonVideoFolder(archiveFiles, 'Archives');
+    pushNonVideoFolder(otherFiles,   'Files');
+    
+    // Track source link
+    const totalFiles = videoFiles.length + imageFiles.length + archiveFiles.length + otherFiles.length;
+    addSourceLink(`https://pixeldrain.com/l/${listId}`, folderLabel, 'list', totalFiles);
+    
+    saveState();
+    updateStats();
+    return {
+      videoCount:   videoFiles.length,
+      imageCount:   imageFiles.length,
+      archiveCount: archiveFiles.length,
+      otherCount:   otherFiles.length,
+      albumTitle: folderLabel,
+    };
+  } catch(e) {
+    console.error('importList error', e);
+    return { videoCount:0, imageCount:0, archiveCount:0, otherCount:0, albumTitle:'Unknown' };
+  }
+}
+
+// ============================================================
+// FILE UPLOAD
+// ============================================================
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById('uploadArea').classList.add('drag-over');
+}
+function handleDragLeave(e) {
+  document.getElementById('uploadArea').classList.remove('drag-over');
+}
+function handleDrop(e) {
+  e.preventDefault();
+  handleDragLeave(e);
+  const files = e.dataTransfer.files;
+  if (files.length > 0) uploadFile(files[0]);
+}
+function handleFileUpload(e) {
+  if (e.target.files.length > 0) uploadFile(e.target.files[0]);
+}
+
+async function uploadFile(file) {
+  const apiKey = state.settings.apiKey || API_KEY;
+  document.getElementById('uploadProgress').style.display = '';
+  document.getElementById('uploadFileName').textContent = file.name;
+  const prog = document.getElementById('progressFill');
+  const pct = document.getElementById('uploadPercent');
+  prog.style.width = '0%'; pct.textContent = '0%';
+  try {
+    await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', `${API_BASE}/file/${encodeURIComponent(file.name)}`);
+      xhr.setRequestHeader('Authorization', 'Basic ' + btoa(':' + apiKey));
+      xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable) {
+          const p = Math.round((e.loaded / e.total) * 100);
+          prog.style.width = p + '%';
+          pct.textContent = p + '%';
+        }
+      };
+      xhr.onload = () => {
+        if (xhr.status === 201 || xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          const id = data.id;
+          const name = data.name || file.name;
+          if (!state.videos.find(v => v.id === id)) {
+            state.videos.unshift({ id, name, added: Date.now(), pinned: false, folderId: null, views: 0 });
+            saveState();
+          }
+          showToast('✅ Uploaded & added!', 'success');
+          renderTab(currentTab);
+          updateStats();
+          prog.style.width = '100%'; pct.textContent = '100%';
+          setTimeout(() => { document.getElementById('uploadProgress').style.display = 'none'; }, 2000);
+          resolve();
+        } else {
+          const err = JSON.parse(xhr.responseText);
+          reject(new Error(err.message || 'Upload failed'));
+        }
+      };
+      xhr.onerror = () => reject(new Error('Network error'));
+      xhr.send(file);
+    });
+  } catch(e) {
+    showToast('Upload failed: ' + e.message, 'error');
+    document.getElementById('uploadProgress').style.display = 'none';
+  }
+}
+
+// ============================================================
+// CREATE ALBUM
+// ============================================================
+function openCreateAlbumModal() {
+  document.getElementById('albumNameInput').value = '';
+  const sel = document.getElementById('albumVideoSelect');
+  sel.innerHTML = '';
+  state.videos.forEach(v => {
+    const div = document.createElement('div');
+    div.innerHTML = `<label class="flex items-center gap-2 p-2 rounded cursor-pointer" style="background:var(--bg-elevated)"><input type="checkbox" value="${v.id}" class="accent-purple-600"/><img src="${getThumbUrl(v.id)}" style="width:40px;height:24px;object-fit:cover;border-radius:4px"/><span class="text-xs flex-1 truncate">${v.name}</span></label>`;
+    sel.appendChild(div);
+  });
+  openModal('createAlbumModal');
+}
+
+async function createAlbum() {
+  const name = document.getElementById('albumNameInput').value.trim();
+  if (!name) { showToast('Enter album name', 'error'); return; }
+  const checked = [...document.querySelectorAll('#albumVideoSelect input:checked')].map(i => i.value);
+  const album = { id: genId(), name, videoIds: checked, added: Date.now(), pixeldrainId: null };
+  if (document.getElementById('pushToPixeldrain').checked && checked.length > 0) {
+    try {
+      const apiKey = state.settings.apiKey || API_KEY;
+      const res = await fetch(`${API_BASE}/list`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(':' + apiKey) },
+        body: JSON.stringify({ title: name, anonymous: false, files: checked.map(id => ({ id })) })
+      });
+      const data = await res.json();
+      if (data.id) { album.pixeldrainId = data.id; showToast('☁ Synced to Pixeldrain!', 'success'); }
+    } catch(e) {}
+  }
+  state.albums.push(album);
+  saveState();
+  closeModal('createAlbumModal');
+  showToast('✅ Album created!', 'success');
+  renderAlbums();
+  updateStats();
+}
+
+// ============================================================
+// CREATE FOLDER
+// ============================================================
+function openCreateFolderModal() {
+  document.getElementById('folderNameInput').value = '';
+  openModal('createFolderModal');
+}
+
+function createFolder() {
+  const name = document.getElementById('folderNameInput').value.trim();
+  if (!name) { showToast('Enter folder name', 'error'); return; }
+  state.folders.push({ id: genId(), name, parentId: state.currentFolder, added: Date.now() });
+  saveState();
+  closeModal('createFolderModal');
+  showToast('📁 Folder created!', 'success');
+  renderFolders();
+  updateStats();
+}
+
+// ============================================================
+// SAVED EXTERNAL LINKS
+// ============================================================
+let selectedBadge = '';
+let ctxSavedLinkId = null;
+
+function openSavedLinkModal(editId = null) {
+  document.getElementById('savedLinkUrl').value = '';
+  document.getElementById('savedLinkName').value = '';
+  document.getElementById('savedLinkThumb').value = '';
+  document.getElementById('savedLinkDetails').value = '';
+  document.getElementById('savedLinkBadge').value = '';
+  document.getElementById('savedLinkBadgeCustom').value = '';
+  document.getElementById('savedLinkBadgeCustom').style.display = 'none';
+  selectedBadge = '';
+  
+  // Reset badge selection
+  document.querySelectorAll('#badgeSelector .service-badge').forEach(b => b.style.opacity = '0.5');
+  
+  // Populate folder select
+  const folderSelect = document.getElementById('savedLinkFolder');
+  folderSelect.innerHTML = '<option value="">Root (No folder)</option>';
+  state.folders.forEach(f => {
+    const opt = document.createElement('option');
+    opt.value = f.id;
+    opt.textContent = f.name;
+    if (f.id === state.currentFolder) opt.selected = true;
+    folderSelect.appendChild(opt);
+  });
+  
+  openModal('savedLinkModal');
+}
+
+function selectBadge(badge, el) {
+  selectedBadge = badge;
+  document.getElementById('savedLinkBadge').value = badge;
+  document.querySelectorAll('#badgeSelector .service-badge').forEach(b => b.style.opacity = '0.5');
+  el.style.opacity = '1';
+  
+  // Show custom input if custom badge selected
+  const customInput = document.getElementById('savedLinkBadgeCustom');
+  if (badge === 'custom') {
+    customInput.style.display = '';
+    customInput.focus();
+  } else {
+    customInput.style.display = 'none';
+  }
+}
+
+function saveLinkEntry() {
+  const url = document.getElementById('savedLinkUrl').value.trim();
+  const name = document.getElementById('savedLinkName').value.trim();
+  const thumbnail = document.getElementById('savedLinkThumb').value.trim();
+  const details = document.getElementById('savedLinkDetails').value.trim();
+  const badge = document.getElementById('savedLinkBadge').value;
+  const badgeCustom = document.getElementById('savedLinkBadgeCustom').value.trim();
+  const folderId = document.getElementById('savedLinkFolder').value || null;
+  
+  if (!url) { showToast('Enter a URL', 'error'); return; }
+  if (!name) { showToast('Enter a name', 'error'); return; }
+  
+  const link = {
+    id: genId(),
+    url,
+    name,
+    thumbnail: thumbnail || null,
+    details: details || null,
+    badge: badge || 'custom',
+    badgeCustom: badge === 'custom' ? badgeCustom : null,
+    folderId,
+    added: Date.now()
+  };
+  
+  state.savedLinks.push(link);
+  saveState();
+  closeModal('savedLinkModal');
+  showToast('🔗 Link saved!', 'success');
+  renderFolders();
+  updateStats();
+}
+
+function openSavedLinkDetail(linkId) {
+  const link = state.savedLinks.find(l => l.id === linkId);
+  if (!link) return;
+  window.open(link.url, '_blank');
+}
+
+function showSavedLinkMenu(e, linkId) {
+  ctxSavedLinkId = linkId;
+  const menu = document.getElementById('savedLinkCtxMenu');
+  menu.style.display = 'block';
+  let x = e.clientX, y = e.clientY;
+  if (x + 180 > window.innerWidth) x = window.innerWidth - 180;
+  if (y + 150 > window.innerHeight) y = window.innerHeight - 150;
+  menu.style.left = x + 'px';
+  menu.style.top = y + 'px';
+}
+
+function slCtxOpen() {
+  if (!ctxSavedLinkId) return;
+  const link = state.savedLinks.find(l => l.id === ctxSavedLinkId);
+  if (link) window.open(link.url, '_blank');
+}
+
+function slCtxCopy() {
+  if (!ctxSavedLinkId) return;
+  const link = state.savedLinks.find(l => l.id === ctxSavedLinkId);
+  if (link) {
+    navigator.clipboard.writeText(link.url).then(() => showToast('📋 Link copied!', 'success'));
+  }
+}
+
+function slCtxDelete() {
+  if (!ctxSavedLinkId) return;
+  if (!confirm('Delete this saved link?')) return;
+  state.savedLinks = state.savedLinks.filter(l => l.id !== ctxSavedLinkId);
+  saveState();
+  showToast('🗑 Link deleted', 'success');
+  renderFolders();
+}
+
+// ============================================================
+// LINK TESTER
+// ============================================================
+let testerRunning = false;
+let testerAbort = false;
+let invalidLinks = [];
+
+function renderTester() {
+  // Reset UI
+  document.getElementById('testerProgress').style.display = 'none';
+  document.getElementById('testerResults').style.display = 'none';
+  document.getElementById('startTestBtn').style.display = '';
+  document.getElementById('stopTestBtn').style.display = 'none';
+  invalidLinks = [];
+  
+  // Populate folder select
+  const folderSelect = document.getElementById('testerFolder');
+  folderSelect.innerHTML = '<option value="">-- Select Folder --</option>';
+  state.folders.forEach(f => {
+    const opt = document.createElement('option');
+    opt.value = f.id;
+    opt.textContent = `${f.name} (${state.videos.filter(v => v.folderId === f.id).length} videos)`;
+    folderSelect.appendChild(opt);
+  });
+  
+  updateTesterCount();
+}
+
+function updateTesterCount() {
+  const scope = document.getElementById('testerScope').value;
+  document.getElementById('testerFolderSelect').style.display = scope === 'folder' ? '' : 'none';
+  
+  let count = 0;
+  if (scope === 'all') {
+    count = state.videos.length;
+  } else if (scope === 'folder') {
+    const folderId = document.getElementById('testerFolder').value;
+    count = state.videos.filter(v => v.folderId === (folderId || null)).length;
+  }
+  document.getElementById('testerCount').textContent = count;
+}
+
+async function startLinkTest() {
+  if (testerRunning) return;
+  
+  const scope = document.getElementById('testerScope').value;
+  let videosToTest = [];
+  
+  if (scope === 'all') {
+    videosToTest = [...state.videos];
+  } else if (scope === 'folder') {
+    const folderId = document.getElementById('testerFolder').value;
+    videosToTest = state.videos.filter(v => v.folderId === (folderId || null));
+  }
+  
+  if (videosToTest.length === 0) {
+    showToast('No videos to test', 'error');
+    return;
+  }
+  
+  testerRunning = true;
+  testerAbort = false;
+  invalidLinks = [];
+  
+  // Update UI
+  document.getElementById('startTestBtn').style.display = 'none';
+  document.getElementById('stopTestBtn').style.display = '';
+  document.getElementById('testerProgress').style.display = '';
+  document.getElementById('testerResults').style.display = '';
+  document.getElementById('invalidLinksList').innerHTML = '';
+  document.getElementById('noInvalidLinks').style.display = 'none';
+  document.getElementById('removeInvalidBtn').style.display = 'none';
+  
+  const total = videosToTest.length;
+  let tested = 0;
+  let valid = 0;
+  let invalid = 0;
+  
+  document.getElementById('testerPending').textContent = total;
+  
+  for (const video of videosToTest) {
+    if (testerAbort) break;
+    
+    try {
+      const res = await fetch(`${API_BASE}/file/${video.id}/info`, { method: 'GET' });
+      
+      if (res.ok) {
+        valid++;
+      } else {
+        invalid++;
+        invalidLinks.push(video);
+        addInvalidLinkToList(video);
+      }
+    } catch(e) {
+      invalid++;
+      invalidLinks.push(video);
+      addInvalidLinkToList(video);
+    }
+    
+    tested++;
+    const percent = Math.round((tested / total) * 100);
+    
+    document.getElementById('testerProgressBar').style.width = percent + '%';
+    document.getElementById('testerProgressText').textContent = `${tested} / ${total}`;
+    document.getElementById('testerValid').textContent = valid;
+    document.getElementById('testerInvalid').textContent = invalid;
+    document.getElementById('testerPending').textContent = total - tested;
+    
+    // Small delay to prevent rate limiting
+    await new Promise(r => setTimeout(r, 100));
+  }
+  
+  testerRunning = false;
+  document.getElementById('startTestBtn').style.display = '';
+  document.getElementById('stopTestBtn').style.display = 'none';
+  
+  if (invalidLinks.length > 0) {
+    document.getElementById('removeInvalidBtn').style.display = '';
+    showToast(`⚠️ Found ${invalidLinks.length} invalid links`, 'error');
+  } else {
+    document.getElementById('noInvalidLinks').style.display = '';
+    showToast('✅ All links are valid!', 'success');
+  }
+}
+
+function stopLinkTest() {
+  testerAbort = true;
+  showToast('Test stopped', '');
+}
+
+function addInvalidLinkToList(video) {
+  const list = document.getElementById('invalidLinksList');
+  const item = document.createElement('div');
+  item.className = 'flex items-center gap-3 p-3 mb-2';
+  item.style.cssText = 'background:var(--bg-elevated);border:1px solid var(--danger);border-radius:10px;opacity:0.3';
+  item.id = `invalid-${video.id}`;
+  
+  const folder = video.folderId ? state.folders.find(f => f.id === video.folderId) : null;
+  
+  item.innerHTML = `
+    <div style="width:48px;height:32px;border-radius:6px;overflow:hidden;background:var(--bg-card);flex-shrink:0">
+      <img src="${getThumbUrl(video.id)}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"/>
+    </div>
+    <div class="flex-1 min-w-0">
+      <div style="font-size:0.8rem;font-weight:600;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(video.name)}</div>
+      <div style="font-size:0.68rem;color:var(--text-muted)">${folder ? folder.name : 'Root'} · ${video.id}</div>
+    </div>
+    <button class="btn-icon" onclick="removeSingleInvalid('${video.id}')" title="Remove" style="width:28px;height:28px;background:var(--danger);border-color:var(--danger);color:white">
+      <i class="fa-solid fa-trash" style="font-size:0.65rem"></i>
+    </button>
+  `;
+  
+  list.appendChild(item);
+  
+  // Animate in
+  setTimeout(() => { item.style.opacity = '1'; item.style.transition = 'opacity 0.3s'; }, 50);
+}
+
+function removeSingleInvalid(videoId) {
+  state.videos = state.videos.filter(v => v.id !== videoId);
+  state.recent = state.recent.filter(id => id !== videoId);
+  state.albums.forEach(a => { a.videoIds = (a.videoIds || []).filter(id => id !== videoId); });
+  invalidLinks = invalidLinks.filter(v => v.id !== videoId);
+  saveState();
+  
+  const item = document.getElementById(`invalid-${videoId}`);
+  if (item) {
+    item.style.opacity = '0';
+    item.style.transform = 'translateX(20px)';
+    item.style.transition = 'all 0.3s';
+    setTimeout(() => item.remove(), 300);
+  }
+  
+  document.getElementById('testerInvalid').textContent = invalidLinks.length;
+  
+  if (invalidLinks.length === 0) {
+    document.getElementById('removeInvalidBtn').style.display = 'none';
+    document.getElementById('noInvalidLinks').style.display = '';
+  }
+  
+  showToast('Video removed', 'success');
+  updateStats();
+}
+
+function removeInvalidLinks() {
+  if (invalidLinks.length === 0) return;
+  if (!confirm(`Remove ${invalidLinks.length} invalid videos from your library?`)) return;
+  
+  const idsToRemove = invalidLinks.map(v => v.id);
+  
+  state.videos = state.videos.filter(v => !idsToRemove.includes(v.id));
+  state.recent = state.recent.filter(id => !idsToRemove.includes(id));
+  state.albums.forEach(a => { a.videoIds = (a.videoIds || []).filter(id => !idsToRemove.includes(id)); });
+  
+  saveState();
+  invalidLinks = [];
+  
+  document.getElementById('invalidLinksList').innerHTML = '';
+  document.getElementById('removeInvalidBtn').style.display = 'none';
+  document.getElementById('noInvalidLinks').style.display = '';
+  document.getElementById('testerInvalid').textContent = '0';
+  
+  showToast('✅ All invalid videos removed', 'success');
+  updateStats();
+}
+
+// ============================================================
+// M3U PLAYLIST
+// ============================================================
+function openM3UModal() { 
+  openModal('m3uModal'); 
+  document.getElementById('m3uPreview').style.display = 'none';
+  document.getElementById('m3uSource').value = 'all';
+  toggleM3uFolder();
+  
+  // Populate folder select
+  const folderSelect = document.getElementById('m3uFolder');
+  folderSelect.innerHTML = '<option value="">-- Select Folder --</option>';
+  state.folders.forEach(f => {
+    const opt = document.createElement('option');
+    opt.value = f.id;
+    opt.textContent = f.name;
+    folderSelect.appendChild(opt);
+  });
+  
+  // Populate album select
+  const albumSelect = document.getElementById('m3uAlbum');
+  albumSelect.innerHTML = '<option value="">-- Select Album --</option>';
+  state.albums.forEach(a => {
+    const opt = document.createElement('option');
+    opt.value = a.id;
+    opt.textContent = `${a.name} (${(a.videoIds||[]).length} videos)`;
+    albumSelect.appendChild(opt);
+  });
+}
+
+function toggleM3uFolder() {
+  const source = document.getElementById('m3uSource').value;
+  document.getElementById('m3uFolderSelect').style.display = source === 'folder' ? '' : 'none';
+  document.getElementById('m3uAlbumSelect').style.display = source === 'album' ? '' : 'none';
+}
+
+function buildM3U() {
+  const name = document.getElementById('m3uName').value || 'My Playlist';
+  const source = document.getElementById('m3uSource').value;
+  let videos = [];
+  
+  if (source === 'all') {
+    videos = state.videos;
+  } else if (source === 'pinned') {
+    videos = state.videos.filter(v => v.pinned);
+  } else if (source === 'folder') {
+    const folderId = document.getElementById('m3uFolder').value;
+    if (folderId) {
+      videos = state.videos.filter(v => v.folderId === folderId);
+    }
+  } else if (source === 'album') {
+    const albumId = document.getElementById('m3uAlbum').value;
+    const album = state.albums.find(a => a.id === albumId);
+    if (album) {
+      videos = (album.videoIds || []).map(id => state.videos.find(v => v.id === id)).filter(Boolean);
+    }
+  }
+  
+  let m3u = '#EXTM3U\n';
+  m3u += `#PLAYLIST:${name}\n\n`;
+  videos.forEach(v => {
+    m3u += `#EXTINF:-1,${v.name}\n`;
+    m3u += `${API_BASE}/file/${v.id}\n\n`;
+  });
+  return { content: m3u, count: videos.length };
+}
+
+function previewM3U() {
+  const result = buildM3U();
+  document.getElementById('m3uContent').value = result.content;
+  document.getElementById('m3uCount').textContent = result.count;
+  document.getElementById('m3uPreview').style.display = '';
+}
+
+function downloadM3U() {
+  const result = buildM3U();
+  if (result.count === 0) { showToast('No videos to export', 'error'); return; }
+  const name = document.getElementById('m3uName').value || 'playlist';
+  const blob = new Blob([result.content], { type: 'audio/x-mpegurl' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name.replace(/\s+/g,'_') + '.m3u';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`📄 M3U downloaded (${result.count} videos)!`, 'success');
+}
+
+// ============================================================
+// CONTEXT MENU
+// ============================================================
+function showCtxMenu(e, id) {
+  ctxVideoId = id;
+  const menu = document.getElementById('ctxMenu');
+  const v = state.videos.find(v => v.id === id);
+  document.getElementById('ctxPinLabel').textContent = v && v.pinned ? 'Unpin' : 'Pin';
+  menu.style.display = 'block';
+  let x = e.clientX, y = e.clientY;
+  if (x + 200 > window.innerWidth) x = window.innerWidth - 200;
+  if (y + 280 > window.innerHeight) y = window.innerHeight - 280;
+  menu.style.left = x + 'px'; menu.style.top = y + 'px';
+}
+document.addEventListener('click', () => { 
+  document.getElementById('ctxMenu').style.display = 'none'; 
+  document.getElementById('savedLinkCtxMenu').style.display = 'none';
+});
+
+function ctxPlay() { if (ctxVideoId) playVideo(ctxVideoId); }
+function ctxPin() {
+  const v = state.videos.find(v => v.id === ctxVideoId);
+  if (!v) return;
+  v.pinned = !v.pinned;
+  saveState();
+  showToast(v.pinned ? '📌 Pinned!' : 'Unpinned', 'success');
+  renderTab(currentTab);
+  updateStats();
+}
+function ctxShare() {
+  if (!ctxVideoId) return;
+  const url = getFilePageUrl(ctxVideoId);
+  if (navigator.share) { navigator.share({ url }); }
+  else { navigator.clipboard.writeText(url).then(() => showToast('Link copied!', 'success')); }
+}
+function ctxCopyId() {
+  if (!ctxVideoId) return;
+  navigator.clipboard.writeText(ctxVideoId).then(() => showToast('File ID copied!', 'success'));
+}
+function ctxOpenPixeldrain() {
+  if (!ctxVideoId) return;
+  window.open(getFilePageUrl(ctxVideoId), '_blank');
+}
+function ctxDelete() {
+  if (!ctxVideoId) return;
+  state.videos = state.videos.filter(v => v.id !== ctxVideoId);
+  state.recent = state.recent.filter(id => id !== ctxVideoId);
+  state.albums.forEach(a => { a.videoIds = a.videoIds.filter(id => id !== ctxVideoId); });
+  saveState();
+  showToast('🗑 Removed from library', 'success');
+  renderTab(currentTab);
+  updateStats();
+}
+
+async function ctxTestLink() {
+  if (!ctxVideoId) return;
+  const video = state.videos.find(v => v.id === ctxVideoId);
+  if (!video) return;
+  
+  showToast('🔍 Testing link...', '');
+  
+  try {
+    const res = await fetch(`${API_BASE}/file/${ctxVideoId}/info`, { method: 'GET' });
+    
+    if (res.ok) {
+      const data = await res.json();
+      showToast(`✅ Link is valid! (${formatBytes(data.size || 0)})`, 'success');
+    } else {
+      const shouldRemove = confirm(`❌ Link is invalid or expired.\n\n"${video.name}"\n\nDo you want to remove it from your library?`);
+      if (shouldRemove) {
+        state.videos = state.videos.filter(v => v.id !== ctxVideoId);
+        state.recent = state.recent.filter(id => id !== ctxVideoId);
+        state.albums.forEach(a => { a.videoIds = (a.videoIds || []).filter(id => id !== ctxVideoId); });
+        saveState();
+        showToast('🗑 Invalid video removed', 'success');
+        renderTab(currentTab);
+        updateStats();
+      }
+    }
+  } catch(e) {
+    showToast('❌ Failed to test link: ' + e.message, 'error');
+  }
+}
+
+function ctxAddToAlbum() {
+  if (state.albums.length === 0) { showToast('Create an album first', 'error'); return; }
+  const albumName = prompt('Album name (or type new name):\n' + state.albums.map(a => a.name).join(', '));
+  if (!albumName) return;
+  let album = state.albums.find(a => a.name.toLowerCase() === albumName.toLowerCase());
+  if (!album) {
+    album = { id: genId(), name: albumName, videoIds: [], added: Date.now() };
+    state.albums.push(album);
+  }
+  if (!album.videoIds.includes(ctxVideoId)) album.videoIds.push(ctxVideoId);
+  saveState();
+  showToast('Added to album!', 'success');
+}
+function ctxMoveToFolder() {
+  if (state.folders.length === 0) { showToast('Create a folder first', 'error'); return; }
+  const folderName = prompt('Folder name:\n' + state.folders.map(f => f.name).join(', '));
+  if (!folderName) return;
+  const folder = state.folders.find(f => f.name.toLowerCase() === folderName.toLowerCase());
+  if (!folder) { showToast('Folder not found', 'error'); return; }
+  const v = state.videos.find(v => v.id === ctxVideoId);
+  if (v) v.folderId = folder.id;
+  saveState();
+  showToast('Moved to folder!', 'success');
+}
+
+// ============================================================
+// SEARCH
+// ============================================================
+function handleSearch(query) {
+  clearTimeout(searchTimeout);
+  if (!query.trim()) { closeSearch(); return; }
+  searchTimeout = setTimeout(() => {
+    previousTab = currentTab;
+    document.querySelectorAll('[id^="tab-"]').forEach(el => el.style.display = 'none');
+    document.getElementById('tab-search').style.display = '';
+    const q = query.toLowerCase();
+    const results = state.videos.filter(v => v.name.toLowerCase().includes(q));
+    const grid = document.getElementById('searchGrid');
+    const empty = document.getElementById('emptySearch');
+    renderVideoGrid(grid, results);
+    empty.style.display = results.length === 0 ? '' : 'none';
+    document.getElementById('searchEmptyMsg').textContent = results.length === 0 ? `No results for "${query}"` : '';
+  }, 300);
+}
+
+function closeSearch() {
+  document.getElementById('searchInput').value = '';
+  switchTab(previousTab || 'home');
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function openModal(id) {
+  document.getElementById(id).classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+  if (!document.querySelector('.modal-bg.show')) document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-bg').forEach(bg => {
+  bg.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
+});
+
+function populateAlbumSelect(selectId) {
+  const sel = document.getElementById(selectId);
+  sel.innerHTML = '<option value="">None</option>';
+  state.albums.forEach(a => {
+    const opt = document.createElement('option');
+    opt.value = a.id; opt.textContent = a.name;
+    sel.appendChild(opt);
+  });
+}
+function populateFolderSelect(selectId) {
+  const sel = document.getElementById(selectId);
+  sel.innerHTML = '<option value="">None</option>';
+  state.folders.forEach(f => {
+    const opt = document.createElement('option');
+    opt.value = f.id; opt.textContent = f.name;
+    sel.appendChild(opt);
+  });
+}
+
+function toggleFabMenu() {
+  fabOpen = !fabOpen;
+  document.getElementById('fabMenu').classList.toggle('show', fabOpen);
+  document.getElementById('fabIcon').className = fabOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-plus';
+}
+function closeFab() {
+  fabOpen = false;
+  document.getElementById('fabMenu').classList.remove('show');
+  document.getElementById('fabIcon').className = 'fa-solid fa-plus';
+}
+
+function showToast(msg, type = '') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  
+  const iconMap = {
+    success: 'fa-check',
+    error: 'fa-xmark',
+    '': 'fa-info'
+  };
+  const icon = iconMap[type] || 'fa-info';
+  
+  t.innerHTML = `
+    <div class="toast-icon"><i class="fa-solid ${icon}"></i></div>
+    <span style="flex:1">${msg}</span>
+  `;
+  c.appendChild(t);
+  
+  // Auto dismiss with animation
+  setTimeout(() => { 
+    t.style.opacity = '0'; 
+    t.style.transform = 'translateY(10px)';
+    t.style.transition = 'all 0.4s ease';
+    setTimeout(() => t.remove(), 400); 
+  }, 3000);
+}
+
+function toggleApiKey() {
+  const input = document.getElementById('apiKeyInput');
+  const icon = document.getElementById('apiKeyToggle').querySelector('i');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.className = 'fa-solid fa-eye-slash';
+  } else {
+    input.type = 'password';
+    icon.className = 'fa-solid fa-eye';
+  }
+}
+
+function saveSettings() {
+  state.settings.apiKey = document.getElementById('apiKeyInput').value.trim();
+  state.settings.autoplay = document.getElementById('autoplay').checked;
+  saveState();
+  showToast('Settings saved!', 'success');
+}
+
+function clearAllData() {
+  if (!confirm('Clear ALL library data? This cannot be undone.')) return;
+  state.videos = []; state.albums = []; state.folders = []; state.recent = []; state.nonVideos = []; state.sources = []; state.savedLinks = [];
+  saveState();
+  showToast('Library cleared', 'success');
+  renderTab(currentTab);
+  updateStats();
+}
+
+function exportData() {
+  const exportObj = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    data: {
+      videos: state.videos,
+      albums: state.albums,
+      folders: state.folders,
+      recent: state.recent,
+      nonVideos: state.nonVideos || [],
+      sources: state.sources || [],
+      savedLinks: state.savedLinks || [],
+      settings: state.settings
+    }
+  };
+  const json = JSON.stringify(exportObj, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const date = new Date().toISOString().split('T')[0];
+  a.href = url;
+  a.download = `pixedrain-backup-${date}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📦 Data exported!', 'success');
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      
+      // Validate structure
+      if (!imported.data) {
+        showToast('Invalid backup file format', 'error');
+        return;
+      }
+      
+      const confirmMsg = `Import backup from ${imported.exportedAt ? new Date(imported.exportedAt).toLocaleString() : 'unknown date'}?\n\nThis will REPLACE all current data.`;
+      if (!confirm(confirmMsg)) {
+        event.target.value = '';
+        return;
+      }
+      
+      // Import data
+      if (imported.data.videos) state.videos = imported.data.videos;
+      if (imported.data.albums) state.albums = imported.data.albums;
+      if (imported.data.folders) state.folders = imported.data.folders;
+      if (imported.data.recent) state.recent = imported.data.recent;
+      if (imported.data.nonVideos) state.nonVideos = imported.data.nonVideos;
+      if (imported.data.sources) state.sources = imported.data.sources;
+      if (imported.data.savedLinks) state.savedLinks = imported.data.savedLinks;
+      if (imported.data.settings) {
+        state.settings = { ...state.settings, ...imported.data.settings };
+        document.getElementById('apiKeyInput').value = state.settings.apiKey || '';
+        document.getElementById('autoplay').checked = state.settings.autoplay !== false;
+      }
+      
+      saveState();
+      showToast(`✅ Imported ${state.videos.length} videos, ${state.albums.length} albums, ${state.folders.length} folders!`, 'success');
+      renderTab(currentTab);
+      updateStats();
+    } catch(err) {
+      showToast('Failed to parse backup file: ' + err.message, 'error');
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function genId() {
+  return Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function formatBytes(bytes) {
+  if (!bytes || bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B','KB','MB','GB','TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+function formatDate(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadState();
+applyTheme();
+document.getElementById('apiKeyInput').value = state.settings.apiKey || API_KEY;
+document.getElementById('autoplay').checked = state.settings.autoplay !== false;
+
+// Initial loading animation
+showLoading('Initializing...');
+setTimeout(() => {
+  hideLoading();
+  renderTab('home');
+  updateStats();
+}, 300);
+
+document.addEventListener('click', (e) => {
+  if (fabOpen && !e.target.closest('#fabBtn') && !e.target.closest('#fabMenu')) closeFab();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeSearch();
+    closeSidebar();
+    document.querySelectorAll('.modal-bg.show').forEach(m => closeModal(m.id));
+  }
+  if (e.key === '/' && !e.target.matches('input,textarea')) {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+});
+
+// Add ripple effect to buttons
+document.querySelectorAll('.btn-primary, .btn-ghost, .fab-btn').forEach(btn => {
+  btn.classList.add('ripple');
+});
+</script>
+</body>
+</html>
